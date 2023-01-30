@@ -1,0 +1,240 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>tomcat的基本知识 | RubySIU's Blog</title><meta name="author" content="RubySIU"><meta name="copyright" content="RubySIU"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="什么是 TomcatTomcat 是一种 web 服务器，用于部署运行 servlet 和 jsp 文件，响应来自浏览器的访问。 Tomcat 的目录结构如下 1234567|- bin     # 存放 tomcat 的可执行文件|- conf    # 服务器配置文件|- lib     # 服务器 jar 包|- logs    # 日志文件|- temp    # 运行时产生的临时数据|-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tomcat的基本知识">
+<meta property="og:url" content="https://rubysiuqvq.github.io/2023/01/24/tomcat%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="RubySIU&#39;s Blog">
+<meta property="og:description" content="什么是 TomcatTomcat 是一种 web 服务器，用于部署运行 servlet 和 jsp 文件，响应来自浏览器的访问。 Tomcat 的目录结构如下 1234567|- bin     # 存放 tomcat 的可执行文件|- conf    # 服务器配置文件|- lib     # 服务器 jar 包|- logs    # 日志文件|- temp    # 运行时产生的临时数据|-">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/image/cover-20230124-tomcat.jpeg">
+<meta property="article:published_time" content="2023-01-24T15:07:40.000Z">
+<meta property="article:modified_time" content="2023-01-30T12:52:52.138Z">
+<meta property="article:author" content="RubySIU">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/image/cover-20230124-tomcat.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://rubysiuqvq.github.io/2023/01/24/tomcat%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'tomcat的基本知识',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-01-30 20:52:52'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/image/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/image/cover-20230124-tomcat.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">RubySIU's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">tomcat的基本知识</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-24T15:07:40.000Z" title="发表于 2023-01-24 23:07:40">2023-01-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-30T12:52:52.138Z" title="更新于 2023-01-30 20:52:52">2023-01-30</time></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h5 id="什么是-Tomcat"><a href="#什么是-Tomcat" class="headerlink" title="什么是 Tomcat"></a>什么是 Tomcat</h5><p>Tomcat 是一种 web 服务器，用于部署运行 servlet 和 jsp 文件，响应来自浏览器的访问。</p>
+<p>Tomcat 的目录结构如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">|- bin     # 存放 tomcat 的可执行文件</span><br><span class="line">|- conf    # 服务器配置文件</span><br><span class="line">|- lib     # 服务器 jar 包</span><br><span class="line">|- logs    # 日志文件</span><br><span class="line">|- temp    # 运行时产生的临时数据</span><br><span class="line">|- webapps # 部署的 web 工程</span><br><span class="line">|- work    # 工作目录，存放运行时 jsp 翻译的 servlet 文件</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>bin</code> 目录下使用 <code>./startup.sh</code> 或 <code>./catalina.sh run</code> 即可启动tomcat，前者将在后台启动，控制台无日志信息，而后者将日志信息输出在控制台。使用 <code>shutdown.sh</code> 即可关闭（前台启动 <code>ctrl+c</code> 强制关闭）。</p>
+<blockquote>
+<p>tomcat 默认监听 8080 端口，可以在 conf&#x2F;server.xml 文件中修改 <code>&lt;Connector&gt; </code> 标签的 port 属性来指定监听端口</p>
+</blockquote>
+<h5 id="部署-web-工程"><a href="#部署-web-工程" class="headerlink" title="部署 web 工程"></a>部署 web 工程</h5><h6 id="1-webapps-下部署"><a href="#1-webapps-下部署" class="headerlink" title="1. webapps 下部署"></a>1. webapps 下部署</h6><p>需要部署的 web 工程文件都需要放在 <code>webapps</code> 文件夹下。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">|- webapps</span><br><span class="line">	|- ROOT</span><br><span class="line">	|- docs</span><br><span class="line">	|- examples</span><br><span class="line">	|- host-manager</span><br><span class="line">	|- project</span><br></pre></td></tr></table></figure>
+
+<p>通过 <code>https://ip:port</code> 将直接访问 ROOT 目录，默认请求 <code>index.html/index.jsp</code> 文件。</p>
+<p>若指定访问工程名 <code>https://ip:port/project</code>  将访问 <code>webapps</code> 目录下的 <code>project</code> 路径，默认请求 <code>index.html/index.jsp</code> 文件。</p>
+<p>若指定文件名 <code>https://ip:port/project/test.html</code> 将请求目标文件。</p>
+<blockquote>
+<p>打包成 war 包后放入 <code>webapps</code> 文件夹，在启动 tomcat 时将自动解压 war 包 。</p>
+</blockquote>
+<h6 id="2-xml-配置部署"><a href="#2-xml-配置部署" class="headerlink" title="2. xml 配置部署"></a>2. xml 配置部署</h6><p>上一种方法必须把工程文件放在 <code>webapps</code> 文件夹下，若想访问其他路径的 web 工程，则需要使用 xml 文件配置。</p>
+<p>有两种配置方法：</p>
+<ol>
+<li>使用 <code>conf/server.xm</code>l 文件配置</li>
+<li>在 <code>conf/Catalina/localhost/</code> 目录下新建 <code>project.xml</code> 文件配置</li>
+</ol>
+<p>通常我们不使用第一种配置方法， 因为 server.xml 文件在 tomcat 启动后便不再读取，因此使用该文件配置需要重启 tomcat。</p>
+<p>使用第二种配置方法可以分项目管理配置。</p>
+<p>在 <code>conf/Catalina/localhost/</code> 下新建 <code>project.xml</code> 文件。</p>
+<blockquote>
+<p>此处 project 应为要部署的工程名，即配置完成后浏览器访问地址为 <code>https://ip:port/project</code> </p>
+</blockquote>
+<p><code>project.xml</code> 文件内容如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Context path=&quot;/project&quot; docBase=&quot;/XXX/..../project&quot; /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>文件中的 Context 标签用于指定项目上下文，其 path 属性指定访问路径，此处指定为 <code>https://ip:port/project</code> </p>
+<p>docBase 属性指定工程实际存储的路径</p>
+<blockquote>
+<p>path 属性可以省略不写，因为 tomcat 会直接将 project.xml 的文件名作为访问路径而忽视掉 path 属性</p>
+<p>因此推荐直接将 xml 文件名作为访问路径，省略 path</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://rubysiuqvq.github.io/">RubySIU</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://rubysiuqvq.github.io/2023/01/24/tomcat%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/">https://rubysiuqvq.github.io/2023/01/24/tomcat的基本知识/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rubysiuqvq.github.io" target="_blank">RubySIU's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/01/19/Windows%E4%B8%8B%E5%85%8D%E5%AE%89%E8%A3%85%E7%89%88Mysql%E7%9A%84%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98/"><img class="next-cover" src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/image/20230119-mysql.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Windows下免安装版MySQL的配置问题</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Tomcat"><span class="toc-number">1.</span> <span class="toc-text">什么是 Tomcat</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2-web-%E5%B7%A5%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">部署 web 工程</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-webapps-%E4%B8%8B%E9%83%A8%E7%BD%B2"><span class="toc-number">2.1.</span> <span class="toc-text">1. webapps 下部署</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-xml-%E9%85%8D%E7%BD%AE%E9%83%A8%E7%BD%B2"><span class="toc-number">2.2.</span> <span class="toc-text">2. xml 配置部署</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By RubySIU</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://rubysiuqvq.github.io/2023/01/24/tomcat%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/'
+    this.page.identifier = '2023/01/24/tomcat的基本知识/'
+    this.page.title = 'tomcat的基本知识'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
