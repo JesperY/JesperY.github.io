@@ -1,0 +1,304 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Spring Bean 的进阶知识 | RubySIU's Blog</title><meta name="keywords" content="Java,Spring"><meta name="author" content="RubySIU"><meta name="copyright" content="RubySIU"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1. Bean 的实例化基本流程当前常用的 ApplicationContext 容器在创建时就会同步创建 Bean 对象，但其底层仍然是通过 BeanFactory  工厂完成这个过程，其基本流程如下：  解析 xml 文件中的配置，将每一个 bean 标签封装为一个实现了 BeanDefinition 接口的对象。 以别名为 key，使用一个 beanDefinitionMap 存储 Bean">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Bean 的进阶知识">
+<meta property="og:url" content="https://rubysiuqvq.github.io/posts/3682695336/index.html">
+<meta property="og:site_name" content="RubySIU&#39;s Blog">
+<meta property="og:description" content="1. Bean 的实例化基本流程当前常用的 ApplicationContext 容器在创建时就会同步创建 Bean 对象，但其底层仍然是通过 BeanFactory  工厂完成这个过程，其基本流程如下：  解析 xml 文件中的配置，将每一个 bean 标签封装为一个实现了 BeanDefinition 接口的对象。 以别名为 key，使用一个 beanDefinitionMap 存储 Bean">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/image/cover-20230201-spring.jpg">
+<meta property="article:published_time" content="2023-02-02T08:08:35.000Z">
+<meta property="article:modified_time" content="2023-02-09T04:47:52.977Z">
+<meta property="article:author" content="RubySIU">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/image/cover-20230201-spring.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://rubysiuqvq.github.io/posts/3682695336/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Spring Bean 的进阶知识',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-02-09 12:47:52'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/image/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/image/cover-20230201-spring.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">RubySIU's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Spring Bean 的进阶知识</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-02-02T08:08:35.000Z" title="发表于 2023-02-02 16:08:35">2023-02-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-02-09T04:47:52.977Z" title="更新于 2023-02-09 12:47:52">2023-02-09</time></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h4 id="1-Bean-的实例化基本流程"><a href="#1-Bean-的实例化基本流程" class="headerlink" title="1. Bean 的实例化基本流程"></a>1. Bean 的实例化基本流程</h4><p>当前常用的 ApplicationContext 容器在创建时就会同步创建 Bean 对象，但其底层仍然是通过 BeanFactory  工厂完成这个过程，其基本流程如下：</p>
+<ol>
+<li>解析 xml 文件中的配置，将每一个 bean 标签封装为一个实现了 BeanDefinition 接口的对象。</li>
+<li>以别名为 key，使用一个 beanDefinitionMap 存储 BeanDefinition 对象。</li>
+<li>遍历 beanDefinitionMap，对每一个条目，获取 BeanDefinition 中存储的 Class 全限定名，使用反射将 bean 实例化。</li>
+<li>将实例化的 bean 对象以别名为 key，封装到 singletonObjects 中，此即为 bean 对象的单例池。</li>
+</ol>
+<p>调用 getBean() 方法时从 singletonObjects 中获取 bean 对象，额外的别名存储在 aliasMap 中。</p>
+<h4 id="2-后处理器"><a href="#2-后处理器" class="headerlink" title="2. 后处理器"></a>2. 后处理器</h4><p>如果我们需要在不修改 xml 配置的情况下，或者其他特殊情况，想要在程序运行过程中修改已经配置好的 bean 的信息，就需要使用后处理器。</p>
+<p>Spring 提供两种后处理器，分别是 BeanFactoryPostProcessor 和 BeanProcessor。这是两个接口，我们实现这个两个接口，并在 xml 中以 bean 的形式注册我们的实现类。Spring 会自动识别到我们提供了后处理器，从而在加载过程中自动调用。</p>
+<blockquote>
+<p>在 xml 中配置时可以仅仅指定 class 属性，因为我们并不会自己使用该 bean，而 Spring 可以通过类型识别后处理器。</p>
+</blockquote>
+<h5 id="2-1-BeanFactoryPostProcessor"><a href="#2-1-BeanFactoryPostProcessor" class="headerlink" title="2.1 BeanFactoryPostProcessor"></a>2.1 BeanFactoryPostProcessor</h5><p>Bean 工厂后处理器，在 BeanDefinitionMap 填充完毕，Bean 实例化之前执行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyBeanFactoryPostProcessor</span> <span class="keyword">implements</span> <span class="title class_">BeanFactoryPostProcessor</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">postProcessBeanFactory</span><span class="params">(ConfigurableListableBeanFactory beanFactory)</span> <span class="keyword">throws</span> BeansException&#123;</span><br><span class="line">        <span class="comment">// 可以通过别名获取 BeanDefinition 对象，该对象中存储 bean 的配置</span></span><br><span class="line">        <span class="type">BeanDefition</span> <span class="variable">beanDefition</span> <span class="operator">=</span> beanFactory.getBeanDefinition(<span class="string">&quot;beanName&quot;</span>);</span><br><span class="line">        <span class="comment">// 可以修改全限定名从而修改最终生成的 bean 的类型</span></span><br><span class="line">        beanDefition.setClassName(<span class="string">&quot;className&quot;</span>);</span><br><span class="line">        <span class="comment">// ...基于 BeanDefition 提供的接口也可以实现更多的操作，从而在实例化之前对 bean 的配置信息进行修改</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一些特殊的操作在默认的 ConfigurableListableBeanFactory 接口中可能没有提供，可以将其强转为子接口来使用更多方法。</p>
+<p>某些操作也可以通过继承 BeanFactoryPostProcessor 的子接口来实现。</p>
+<h5 id="2-2-BeanPostProcessor"><a href="#2-2-BeanPostProcessor" class="headerlink" title="2.2 BeanPostProcessor"></a>2.2 BeanPostProcessor</h5><p>Bean 工厂处理器，在 Bean 实例化之后，添加到 singletonObjects 之前执行。</p>
+<p>该接口的用法与上一接口类似，但其中有两个可重写方法，可以分别在初始化之前和之后执行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">postProcessAfterInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException &#123;</span><br><span class="line">    <span class="keyword">return</span> BeanPostProcessor.<span class="built_in">super</span>.postProcessAfterInitialization(bean, beanName);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">postProcessBeforeInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException &#123;</span><br><span class="line">    <span class="keyword">return</span> BeanPostProcessor.<span class="built_in">super</span>.postProcessBeforeInitialization(bean, beanName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>interface.super.method(); </code> 的写法是调用指定接口的默认方法。该特性在 Java8 中为兼容旧版接口而添加。</p>
+</blockquote>
+<p>此处所说的初始化是指我们在 xml 文件中以 init-method 属性指定初始化，上述两个方法分别在 init-method 之前和之后执行，而并非指类加载流程中的初始化。</p>
+<blockquote>
+<p>至此我们了解的 Spring 容器创建过程中可由我们指定自定义方法介入 bean 创建的总结如下：</p>
+<ol>
+<li>BeanFactoryPostProcessor 接口，该接口提供的方法在 BeanDefinition 信息全部填充到 BeanDefinitionMap 之后，Bean 实例化之前执行。</li>
+<li>Bean 的构造方法，开始实例化 Bean 对象。</li>
+<li>postProcessBeforeInitialization 方法，由 BeanPostProcessor 提供。</li>
+<li>afterPropertiesSet 方法，由 Bean 对象实现 initializingBean 接口继承来的方法。</li>
+<li>init-method 属性指定的初始化方法。</li>
+<li>postProcessAfterInitialization  方法，由 BeanPostProcessor 提供。</li>
+</ol>
+</blockquote>
+<p><em><strong>上述 bean 创建过程暂做了解，后续有更详细的 Bean 的生命周期。</strong></em></p>
+<h4 id="3-Spring-Bean-的生命周期"><a href="#3-Spring-Bean-的生命周期" class="headerlink" title="3. Spring Bean 的生命周期"></a>3. Spring Bean 的生命周期</h4><p>Bean 的生命周期大概可以划分为三个阶段：</p>
+<ol>
+<li>Bean 的实例化：调用 Bean 的构造方法创建 Bean 对象</li>
+<li>Bean 的初始化：执行一系列自定义的初始化过程，如属性注入，调用处理器方法等</li>
+<li>Bean 的完成：完成 Bean 的创建，存入单例池</li>
+</ol>
+<blockquote>
+<p>注意不要把此处的 Bean 的实例化和初始化误解为对象的实例化和初始化，此处是指 Bean 在容器中的状态。</p>
+</blockquote>
+<p>实例化阶段主要是读取 BeanDefinition 配置信息，此过程不做重点研究，接下来主要讨论初始化阶段。</p>
+<h5 id="3-1-Bean-的初始化"><a href="#3-1-Bean-的初始化" class="headerlink" title="3.1 Bean 的初始化"></a>3.1 Bean 的初始化</h5><p>主要有以下几个过程：</p>
+<ol>
+<li>Bean 实例依赖注入</li>
+<li>Aware 接口属性注入</li>
+<li>BeanPostProcessor 的 before 方法</li>
+<li>InitializationBean 接口的方法回调</li>
+<li>init-methon 属性指定的初始化方法</li>
+<li>BeanPostProcessor 的 after 方法</li>
+</ol>
+<blockquote>
+<p>BeanFactoryPostProcessor 接口的方法在 Bean 的实例化之前就已经执行。</p>
+</blockquote>
+<p>Aware 接口属性注入最后讨论，而后面几个方法均已了解过，此处仅讨论 Bean 的依赖注入过程。</p>
+<h5 id="3-2-Bean-的依赖注入"><a href="#3-2-Bean-的依赖注入" class="headerlink" title="3.2 Bean 的依赖注入"></a>3.2 Bean 的依赖注入</h5><p>在 xml 中使用 property 标签配置依赖注入。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 此处为添加 Bean 的代码 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;Bean1&quot;</span> <span class="attr">class</span>=<span class="string">&quot;one.rubysiu.spring.Bean1&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">value</span>=<span class="string">&quot;value&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">&quot;age&quot;</span> <span class="attr">value</span>=<span class="string">&quot;13&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">&quot;test&quot;</span> <span class="attr">value</span>=<span class="string">&quot;13&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;Bean2&quot;</span> <span class="attr">class</span>=<span class="string">&quot;one.rubysiu.spring.Bean2&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;property1&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;Bean1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;propertyList&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">list</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>abc<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">&quot;Bean1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">ref</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;one.rubysiu.spring.Bean1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上述配置是上一节的内容，其中 Bean2 的配置信息会被封装在 BeanDefinition 对象中，然后以别名为 key 存储到 BeanDefinitionMap，在这个 BeanDefinition 对象中有一个 propertyValues 属性，其中维护着一个 propertyValueList 列表，列表中以 propertyValue 类型存储着所有需要注入的属性的 name 和 RuntimeReference 引用，该引用指向注入时需要的的 Bean。</p>
+<p>Bean 的依赖注入设计三种情况：</p>
+<ol>
+<li>基本数据类型填充</li>
+<li>Bean 的单向注入：即 Bean2 中需要注入 Bean1，Bean1 中不需要注入 Bean2。如上述配置文件所述。</li>
+<li>Bean 的双向注入：Bean2 中需要注入 Bean1，Bean1 中也需要注入Bean2。即上述配置中 Bean1 添加一个引用 Bean2 的 property。</li>
+</ol>
+<p>第一种情况 Spring 会直接通过反射调用对应的 set 方法完成注入，我们主要讨论后两种方法。</p>
+<h6 id="3-2-1-Bean-的单向注入"><a href="#3-2-1-Bean-的单向注入" class="headerlink" title="3.2.1 Bean 的单向注入"></a>3.2.1 Bean 的单向注入</h6><p>单向注入的流程比较简单，Spring 加载 Bean 时是按照配置文件中的先后顺序加载的，当遇到一个需要注入的属性，如果其需要的 Bean 已经创建，只需要调用对应的 set 方法注入即可，如果需要的 Bean 尚未被创建，则先中断当前 Bean 的创建过程，去创建需要的 Bean，然后再回来继续注入，以此类推。</p>
+<h6 id="3-2-2-Bean-的双向注入"><a href="#3-2-2-Bean-的双向注入" class="headerlink" title="3.2.2 Bean 的双向注入"></a>3.2.2 Bean 的双向注入</h6><p>Spring 使用三级缓存来存储完整 Bean 实例和半成品 Bean 实例 （未完全初始化的 Bean）。并以此解决循环依赖的问题。</p>
+<p>常用的 DefaultListableBeanFactory 工厂类继承自 DefaultSingletonBeanRegistry，该父类提供了三个 Map 用于存储不同时期的 Bean。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DefaultSingletonBeanRegistry</span> <span class="keyword">extends</span> <span class="title class_">SimpleAliasRegistry</span> <span class="keyword">implements</span> <span class="title class_">SingletonBeanRegistry</span> &#123;</span><br><span class="line">    <span class="comment">// 一级缓存，最终单例池，缓存完成的 Bean 对象。</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, Object&gt; singletonObjects = <span class="keyword">new</span> <span class="title class_">ConcurrentHashMap</span>(<span class="number">256</span>);</span><br><span class="line">    <span class="comment">// 二级缓存，早期 Bean 单例池，缓存半成品对象，且该对象已经被其他对象引用。</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, Object&gt; earlySingletonObjects = <span class="keyword">new</span> <span class="title class_">ConcurrentHashMap</span>(<span class="number">16</span>);</span><br><span class="line">    <span class="comment">// 三级缓存，单例 Bean 的工厂池，缓存半成品对象，此时该对象未被其他任何对象引用。</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, ObjectFactory&lt;?&gt;&gt; singletonFactories = <span class="keyword">new</span> <span class="title class_">HashMap</span>(<span class="number">16</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Spring 依靠 Bean 的中间态只能解决 property 注入的循环依赖，对于构造注入的循环依赖会抛出异常。</p>
+</blockquote>
+<p>当我们获取一个 Bean1 时，会首先去单例池中查看该 Bean1 是否已被创建，若没有则创建该 Bean1，假设 Bean1 中引用了 Bean2，Bean2 中引用了 Bean1，则两者的创建流程如下：</p>
+<ol>
+<li><p>容器实例化 Bean1，将其存入三级缓存</p>
+</li>
+<li><p>对 Bean1 进行注入，发现需要的 Bean2 尚未创建，于是停止 Bean1 的初始化，创建 Bean2</p>
+</li>
+<li><p>Bean2 实例化，存入三级缓存</p>
+</li>
+<li><p>对 Bean2 进行注入，发现需要 Bean1，且在三级缓存中找到了 Bean1，则注入其引用并将 Bean1 转移到二级缓存</p>
+<blockquote>
+<p>Spring 在查找缓存时从一级缓存开始查找，因此如果在二级缓存中找到应该不做额外处理。</p>
+</blockquote>
+</li>
+<li><p>完成 Bean2 的初始化，存入一级缓存</p>
+</li>
+<li><p>回到 Bean1 的初始化，完成后存入一级缓存</p>
+</li>
+</ol>
+<p>至此循环依赖的问题解决。</p>
+<h6 id="3-2-3-Aware-接口"><a href="#3-2-3-Aware-接口" class="headerlink" title="3.2.3 Aware 接口"></a>3.2.3 Aware 接口</h6><p>总共有四个 Aware 接口，分别是 ServletContextAware，ApplicationContextAware，BeanFactoryAware，BeanNameAware。每一个接口对应一个 set 方法，用于注入其方法名对应的属性，Spring 会自动回调实现了这四个接口的方法。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://rubysiuqvq.github.io/">RubySIU</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://rubysiuqvq.github.io/posts/3682695336/">https://rubysiuqvq.github.io/posts/3682695336/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rubysiuqvq.github.io" target="_blank">RubySIU's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Java/">Java</a><a class="post-meta__tags" href="/tags/Spring/">Spring</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/1981698292/"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Servlet基础知识</div></div></a></div><div class="next-post pull-right"><a href="/posts/1724217866/"><img class="next-cover" src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/image/cover-20230201-spring.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Spring-基于xml的bean配置</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/1724217866/" title="Spring-基于xml的bean配置"><img class="cover" src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/image/cover-20230201-spring.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-31</div><div class="title">Spring-基于xml的bean配置</div></div></a></div><div><a href="/posts/1981698292/" title="Servlet基础知识"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-07</div><div class="title">Servlet基础知识</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Bean-%E7%9A%84%E5%AE%9E%E4%BE%8B%E5%8C%96%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="toc-text">1. Bean 的实例化基本流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%90%8E%E5%A4%84%E7%90%86%E5%99%A8"><span class="toc-text">2. 后处理器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-BeanFactoryPostProcessor"><span class="toc-text">2.1 BeanFactoryPostProcessor</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2-BeanPostProcessor"><span class="toc-text">2.2 BeanPostProcessor</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Spring-Bean-%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-text">3. Spring Bean 的生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-Bean-%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">3.1 Bean 的初始化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-Bean-%E7%9A%84%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-text">3.2 Bean 的依赖注入</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#3-2-1-Bean-%E7%9A%84%E5%8D%95%E5%90%91%E6%B3%A8%E5%85%A5"><span class="toc-text">3.2.1 Bean 的单向注入</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-2-2-Bean-%E7%9A%84%E5%8F%8C%E5%90%91%E6%B3%A8%E5%85%A5"><span class="toc-text">3.2.2 Bean 的双向注入</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-2-3-Aware-%E6%8E%A5%E5%8F%A3"><span class="toc-text">3.2.3 Aware 接口</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By RubySIU</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://rubysiuqvq.github.io/posts/3682695336/'
+    this.page.identifier = 'posts/3682695336/'
+    this.page.title = 'Spring Bean 的进阶知识'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
