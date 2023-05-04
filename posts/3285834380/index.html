@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>力扣-算法-第一章 | RubySIU's Blog</title><meta name="keywords" content="Algorithm,Leetcode"><meta name="author" content="RubySIU"><meta name="copyright" content="RubySIU"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="No.278 第一个错误版本题目描述你是产品经理，目前正在带领一个团队开发新的产品。不幸的是，你的产品的最新版本没有通过质量检测。由于每个版本都是基于之前的版本开发的，所以错误的版本之后的所有版本都是错的。 假设你有 n 个版本 [1, 2, …, n]，你想找出导致之后所有版本出错的第一个错误的版本。 你可以通过调用 bool isBadVersion(version) 接口来判断版本号 ver">
+<meta property="og:type" content="article">
+<meta property="og:title" content="力扣-算法-第一章">
+<meta property="og:url" content="https://rubysiuqvq.github.io/posts/3285834380/index.html">
+<meta property="og:site_name" content="RubySIU&#39;s Blog">
+<meta property="og:description" content="No.278 第一个错误版本题目描述你是产品经理，目前正在带领一个团队开发新的产品。不幸的是，你的产品的最新版本没有通过质量检测。由于每个版本都是基于之前的版本开发的，所以错误的版本之后的所有版本都是错的。 假设你有 n 个版本 [1, 2, …, n]，你想找出导致之后所有版本出错的第一个错误的版本。 你可以通过调用 bool isBadVersion(version) 接口来判断版本号 ver">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+<meta property="article:published_time" content="2023-03-11T06:20:54.000Z">
+<meta property="article:modified_time" content="2023-04-11T12:39:55.024Z">
+<meta property="article:author" content="RubySIU">
+<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="Leetcode">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://rubysiuqvq.github.io/posts/3285834380/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '力扣-算法-第一章',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-11 20:39:55'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/image/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">25</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">RubySIU's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">力扣-算法-第一章</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-11T06:20:54.000Z" title="发表于 2023-03-11 14:20:54">2023-03-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-04-11T12:39:55.024Z" title="更新于 2023-04-11 20:39:55">2023-04-11</time></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h4 id="No-278-第一个错误版本"><a href="#No-278-第一个错误版本" class="headerlink" title="No.278 第一个错误版本"></a>No.278 第一个错误版本</h4><h5 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h5><p>你是产品经理，目前正在带领一个团队开发新的产品。不幸的是，你的产品的最新版本没有通过质量检测。由于每个版本都是基于之前的版本开发的，所以错误的版本之后的所有版本都是错的。</p>
+<p>假设你有 n 个版本 [1, 2, …, n]，你想找出导致之后所有版本出错的第一个错误的版本。</p>
+<p>你可以通过调用 bool isBadVersion(version) 接口来判断版本号 version 是否在单元测试中出错。实现一个函数来查找第一个错误的版本。你应该尽量减少对调用 API 的次数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line">输入：n = 5, bad = 4</span><br><span class="line">输出：4</span><br><span class="line">解释：</span><br><span class="line">调用 isBadVersion(3) -&gt; false </span><br><span class="line">调用 isBadVersion(5) -&gt; true </span><br><span class="line">调用 isBadVersion(4) -&gt; true</span><br><span class="line">所以，4 是第一个错误的版本。</span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line">输入：n = 1, bad = 1</span><br><span class="line">输出：1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= bad &lt;= n &lt;= 2^31 - 1</code></li>
+</ul>
+</blockquote>
+<h5 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h5><p>本质是一个查找问题，要求尽可能的少的比较次数，很自然的想到二分查找。中值为正确版本，则目标值在右侧，中值为错误版本，则目标值在左侧，查找成功的条件为当前值为错误版本且前一个为正确版本。</p>
+<p>如果在一次查找中比较 mid 和 mid - 1 的值，则一次查找要调用两次接口，为了避免这样一种情况—— mid 为目标值，但在不判断 mid - 1 的情况下直接令 right &#x3D; mid - 1 会导致该目标值被排除掉。我们修改二分查找为 right &#x3D; mid，从而避免边界情况，这样修改之后，如果 right 为目标值，则 right 不变，left 继续向 right 靠近直到 left &#x3D; right。同理如果 right 始终没有取到目标值，也最终会通过二分查找步骤查询到目标值。</p>
+<p>需要注意由于我们令 right &#x3D; mid 而不是 right &#x3D; mid - 1，因此循环结束条件不再是 left &lt;&#x3D; right 而是 left &lt; right，显然如果 right 指向目标值则会导致 right 不断更新为同一个值进而导致死循环，而采用不等判断时返回值不能采用 mid，这是因为这种条件下 mid 无法取到 left &#x3D; right 条件下所代表的中值，因此返回值只能是 right 或者 left。</p>
+<blockquote>
+<p>根据提示得传入值在运算过程中有可能溢出，因此令 mid &#x3D; left + (right - left) &#x2F; 2。</p>
+</blockquote>
+<h5 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* The isBadVersion API is defined in the parent class VersionControl.</span></span><br><span class="line"><span class="comment">      boolean isBadVersion(int version); */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Solution</span> <span class="keyword">extends</span> <span class="title class_">VersionControl</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">firstBadVersion</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">     <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">1</span>, right = n;</span><br><span class="line">        <span class="keyword">while</span> (left &lt; right) &#123; <span class="comment">// 循环直至区间左右端点相同</span></span><br><span class="line">            <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> left + (right - left) / <span class="number">2</span>; <span class="comment">// 防止计算时溢出</span></span><br><span class="line">            <span class="keyword">if</span> (isBadVersion(mid)) &#123;</span><br><span class="line">                right = mid; <span class="comment">// 答案在区间 [left, mid] 中</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                left = mid + <span class="number">1</span>; <span class="comment">// 答案在区间 [mid+1, right] 中</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 此时有 left == right，区间缩为一个点，即为答案</span></span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//执行用时: 13 ms</span></span><br><span class="line"><span class="comment">//内存消耗: 37.8 MB</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="No-35-搜索插入位置"><a href="#No-35-搜索插入位置" class="headerlink" title="No.35 搜索插入位置"></a>No.35 搜索插入位置</h4><h5 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h5><p>给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。</p>
+<p>请必须使用时间复杂度为 O(log n) 的算法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line">输入: nums = [1,3,5,6], target = 5</span><br><span class="line">输出: 2</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line">输入: nums = [1,3,5,6], target = 2</span><br><span class="line">输出: 1</span><br><span class="line"></span><br><span class="line">示例 3:</span><br><span class="line">输入: nums = [1,3,5,6], target = 7</span><br><span class="line">输出: 4</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>提示:</p>
+<p>1 &lt;&#x3D; nums.length &lt;&#x3D; 104</p>
+<p>-104 &lt;&#x3D; nums[i] &lt;&#x3D; 104</p>
+<p>nums 为 无重复元素 的 升序 排列数组</p>
+<p>-104 &lt;&#x3D; target &lt;&#x3D; 104</p>
+</blockquote>
+<h5 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h5><p>从题目要求不难看出需要使用二分查找。</p>
+<p>根据题意知数组有序，要查找的目标元素为第一个大于等于 target 的元素，返回其下标。</p>
+<h5 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">searchInsert</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> target)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>, right = nums.length;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(left &lt; right)&#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">mid</span> <span class="operator">=</span> left + (right - left) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[mid] &gt;= target)&#123;</span><br><span class="line">                right = mid;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                left = mid + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 执行用时: 0 ms</span></span><br><span class="line"><span class="comment">// 内存消耗: 41 MB</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="No-283-移动零"><a href="#No-283-移动零" class="headerlink" title="No.283 移动零"></a>No.283 移动零</h4><h5 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h5><p>给定一个数组 <code>nums</code>，编写一个函数将所有 <code>0</code> 移动到数组的末尾，同时保持非零元素的相对顺序。</p>
+<p><strong>请注意</strong> ，必须在不复制数组的情况下原地对数组进行操作。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line">输入: nums = [0,1,0,3,12]</span><br><span class="line">输出: [1,3,12,0,0]</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line">输入: nums = [0]</span><br><span class="line">输出: [0]</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>提示</strong>:</p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 104</code></li>
+<li><code>-231 &lt;= nums[i] &lt;= 231 - 1</code></li>
+</ul>
+</blockquote>
+<h5 id="解题思路-2"><a href="#解题思路-2" class="headerlink" title="解题思路"></a>解题思路</h5><p>要求不能复制数组，就只能考虑数组内部移动。</p>
+<p>本质是在保持元素顺序不变的情况下将所有的零移动到数组末尾，有点类似于排序算法，只是排序对象只针对零，又因为同时要保持非零元素顺序不变，这种排序过程不改变无关元素先后顺序的要求很像冒泡排序。</p>
+<p>一种比较暴力的方法，遍历数组，对于每个零元素，查找其后的第一个非零元素，交换两者位置，直到数组遍历完毕。</p>
+<p>整个交换过程还可以看做是所有非零元素的向前移动，因此可以考虑数组元素的平移，使用双指针遍历数组，一边遍历一边进行复制，即令 nums[j] &#x3D; nums[i]，没有碰到零元素时，i &#x3D;&#x3D; j，数组并没有发生任何改变，如果当前 i 遍历到零，则 j 停止一次自增且不进行赋值，此时 i &#x3D; j+1，这样两个指针出现了偏移，零之后的元素相当于向前平移了一位，此过程要记录遍历到的零的个数，因为我们最后要把数组末尾填充为零。</p>
+<h5 id="题解-2"><a href="#题解-2" class="headerlink" title="题解"></a>题解</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">moveZeroes</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">zeroCount</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; nums.length; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i] == <span class="number">0</span>)&#123;</span><br><span class="line">                zeroCount++;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                nums[j] = nums[i];</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> nums.length - <span class="number">1</span>; zeroCount &gt; <span class="number">0</span>; i--)&#123;</span><br><span class="line">            nums[i] = <span class="number">0</span>;</span><br><span class="line">            zeroCount--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="No-167-两数之和-II-输入有序数组"><a href="#No-167-两数之和-II-输入有序数组" class="headerlink" title="No.167 两数之和 II - 输入有序数组"></a>No.167 两数之和 II - 输入有序数组</h4><h5 id="题目描述-3"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h5><p>给你一个下标从 1 开始的整数数组 numbers ，该数组已按 非递减顺序排列  ，请你从数组中找出满足相加之和等于目标数 target 的两个数。如果设这两个数分别是 numbers[index1] 和 numbers[index2] ，则 1 &lt;&#x3D; index1 &lt; index2 &lt;&#x3D; numbers.length 。</p>
+<p>以长度为 2 的整数数组 [index1, index2] 的形式返回这两个整数的下标 index1 和 index2。</p>
+<p>你可以假设每个输入 只对应唯一的答案 ，而且你 不可以 重复使用相同的元素。</p>
+<p>你所设计的解决方案必须只使用常量级的额外空间。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line">输入：numbers = [2,7,11,15], target = 9</span><br><span class="line">输出：[1,2]</span><br><span class="line">解释：2 与 7 之和等于目标数 9 。因此 index1 = 1, index2 = 2 。返回 [1, 2] 。</span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line">输入：numbers = [2,3,4], target = 6</span><br><span class="line">输出：[1,3]</span><br><span class="line">解释：2 与 4 之和等于目标数 6 。因此 index1 = 1, index2 = 3 。返回 [1, 3] 。</span><br><span class="line"></span><br><span class="line">示例 3：</span><br><span class="line">输入：numbers = [-1,0], target = -1</span><br><span class="line">输出：[1,2]</span><br><span class="line">解释：-1 与 0 之和等于目标数 -1 。因此 index1 = 1, index2 = 2 。返回 [1, 2] 。</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>提示：</p>
+<p>2 &lt;&#x3D; numbers.length &lt;&#x3D; 3 * 104</p>
+<p>-1000 &lt;&#x3D; numbers[i] &lt;&#x3D; 1000</p>
+<p>numbers 按 非递减顺序 排列</p>
+<p>-1000 &lt;&#x3D; target &lt;&#x3D; 1000</p>
+<p>仅存在一个有效答案</p>
+</blockquote>
+<h5 id="解题思路-3"><a href="#解题思路-3" class="headerlink" title="解题思路"></a>解题思路</h5><p>两数之和， 由于题目要求 O(1) 的空间复杂度，因此 Map 的方法就不能用了，常规的暴力搜索时间复杂度太高。</p>
+<p>题目中给出了额外的条件，即数组是有序的。在有序数组中同时进行两个元素的操作，自然考虑到双指针，寻找 nums[i] + nums[j] &#x3D;&#x3D; target。</p>
+<p>根据有序条件，考虑前后指针顺序搜索，即一个指针固定当前值，另一个指针顺序搜索后续值，当两者之和大于 target 时，前一个指针后移一位，继续同样的操作，直到找到目标值。即使通过排序可以排除掉所有 nums[i] + nums[j] &gt; target 的情况，但其时间复杂度仍然是 O(n<sup>2</sup>)。</p>
+<p>换一种思路，一个指针从最小值开始，一个指针从最大值开始，两元素之和只有三种情况，等于、大于或小于 target，等于即是结果，小于则要增大元素之和，因为最大值已经不能再增大，因此只能最小值指针增大，大于则要减小元素，因为最小值已经不能再减小，因此只能最大值减小。</p>
+<h5 id="题解-3"><a href="#题解-3" class="headerlink" title="题解"></a>题解</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] twoSum(<span class="type">int</span>[] numbers, <span class="type">int</span> target) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">index1</span> <span class="operator">=</span> <span class="number">0</span>, index2 =numbers.length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(index1 &lt; index2)&#123;</span><br><span class="line">            <span class="keyword">if</span>(numbers[index1] + numbers[index2] == target)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;index1+<span class="number">1</span>, index2+<span class="number">1</span>&#125;;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(numbers[index1] + numbers[index2] &gt; target)&#123;</span><br><span class="line">                index2--;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                index1++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;index1+<span class="number">1</span>, index2+<span class="number">1</span>&#125;; <span class="comment">// 无用语句，只是为了通过编译。</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="No-3-无重复字符的最长子串"><a href="#No-3-无重复字符的最长子串" class="headerlink" title="No.3 无重复字符的最长子串"></a>No.3 无重复字符的最长子串</h4><h5 id="题目描述-4"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h5><p>给定一个字符串 <code>s</code> ，请你找出其中不含有重复字符的 <strong>最长子串</strong> 的长度。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line">输入: s = &quot;abcabcbb&quot;</span><br><span class="line">输出: 3 </span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。</span><br><span class="line"></span><br><span class="line">示例 2:</span><br><span class="line">输入: s = &quot;bbbbb&quot;</span><br><span class="line">输出: 1</span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;b&quot;，所以其长度为 1。</span><br><span class="line"></span><br><span class="line">示例 3:</span><br><span class="line">输入: s = &quot;pwwkew&quot;</span><br><span class="line">输出: 3</span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;wke&quot;，所以其长度为 3。</span><br><span class="line">     请注意，你的答案必须是 子串 的长度，&quot;pwke&quot; 是一个子序列，不是子串。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>0 &lt;= s.length &lt;= 5 * 104</code></li>
+<li><code>s</code> 由英文字母、数字、符号和空格组成</li>
+</ul>
+</blockquote>
+<h5 id="解题思路-4"><a href="#解题思路-4" class="headerlink" title="解题思路"></a>解题思路</h5><p>第一反应暴力遍历，对于每个起始字符搜寻其后的最长不重复子串。</p>
+<p>乍一看有点像动态规划的题目，对于以索引 i 结尾的最长不重复子串命名为 f(i)，则如果 f(i-1) 中没有重复的字符，f(i) &#x3D; f(i-1) + i，如果有重复字符，则需要将重复字符排除，很明显并不能将问题拆分为寻找 f(i-1) 和 f(i) 之间的关系，动态规划的思路也无法进行下去。</p>
+<p>双指针的思路与暴力遍历类似，一个指针指向起始字符，另一个指针先后遍历并不断记录遍历过的字符，当遇见重复字符时，则需要将左指针后移至没有重复字符为止，这要求右指针遍历时记录每个字符的索引，重复时将左指针移动到重复字符的右侧。</p>
+<p>上述双指针方法其实就是所谓的滑动窗口，我们只需要使用一个左指针维护窗口左边界，同时不断向右遍历扩展右边界，在出现重复字符时更新左边界，并不断记录窗口最长长度即可。</p>
+<h5 id="题解-4"><a href="#题解-4" class="headerlink" title="题解"></a>题解</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">lengthOfLongestSubstring</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">max</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">char</span>[] chars = s.toCharArray();</span><br><span class="line">        <span class="comment">// 窗口右侧扩展一位后出现的情况：</span></span><br><span class="line">        <span class="comment">// (1) 新加入一位后窗口内子串仍然满足要求，则 left 不动，max 更新</span></span><br><span class="line">        <span class="comment">// (2) 新加入一位后窗口内子串出现重复，则 left 更新到重复字符的后一位，max 检查是否更新</span></span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">        <span class="comment">// 如何检查子串重复并更新 left ？</span></span><br><span class="line">        <span class="comment">// 更新 left 需要我们知道重复字符的索引</span></span><br><span class="line">        <span class="comment">// (1) 遍历子串，查找重复字符</span></span><br><span class="line">        <span class="comment">// (2) 使用 map 存储字符和字符索引</span></span><br><span class="line">        <span class="comment">// 如果使用 map，则会出现窗口之前的重复字符被检查到的情况</span></span><br><span class="line">        <span class="comment">// 此时更新 left 并不符合要求，但是窗口之前的重复字符其索引值一定小于窗口内的重复字符</span></span><br><span class="line">        <span class="comment">// 因此可以检查重复字符索引是否小于 left，若是则不更新。另外要及时更新重复字符索引。</span></span><br><span class="line"></span><br><span class="line">        Map&lt;Character, Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; s.length(); i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(map.containsKey(chars[i]))&#123;</span><br><span class="line">                <span class="keyword">if</span>(map.get(chars[i]) &gt;= left)&#123;</span><br><span class="line">                    left = map.get(chars[i]) + <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">           </span><br><span class="line">            map.put(chars[i], i);</span><br><span class="line">            </span><br><span class="line">            <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> i - left + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>(max &lt; len)&#123;</span><br><span class="line">                max = len;</span><br><span class="line">            &#125;</span><br><span class="line">  </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="No-733-图像渲染"><a href="#No-733-图像渲染" class="headerlink" title="No.733 图像渲染"></a>No.733 图像渲染</h4><h5 id="题目描述-5"><a href="#题目描述-5" class="headerlink" title="题目描述"></a>题目描述</h5><p>有一幅以 m x n 的二维整数数组表示的图画 image ，其中 image[i][j] 表示该图画的像素值大小。</p>
+<p>你也被给予三个整数 sr ,  sc 和 newColor 。你应该从像素 image[sr][sc] 开始对图像进行 上色填充 。</p>
+<p>为了完成 上色工作 ，从初始像素开始，记录初始坐标的 上下左右四个方向上 像素值与初始坐标相同的相连像素点，接着再记录这四个方向上符合条件的像素点与他们对应 四个方向上 像素值与初始坐标相同的相连像素点，……，重复该过程。将所有有记录的像素点的颜色值改为 newColor 。</p>
+<p>最后返回 经过上色渲染后的图像 。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入: image = [[1,1,1],[1,1,0],[1,0,1]]，sr = 1, sc = 1, newColor = 2</span><br><span class="line">输出: [[2,2,2],[2,2,0],[2,0,1]]</span><br><span class="line">解析: 在图像的正中间，(坐标(sr,sc)=(1,1)),在路径上所有符合条件的像素点的颜色都被更改成2。</span><br><span class="line">注意，右下角的像素没有更改为2，因为它不是在上下左右四个方向上与初始点相连的像素点。</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="解题思路-5"><a href="#解题思路-5" class="headerlink" title="解题思路"></a>解题思路</h5><p>不难看出，实际上是对二维数组从给定坐标所开始的搜索算法。此处采用的是上下左右四个方向的搜索，相当于将每个坐标视为一个点，与上下左右四个方向上存在边从而构成一张图，这道题就转化为了图的遍历，无论是深度优先还是广度优先都可以满足题目要求，记录该题只是为了学习其二维数组的 DFS 与 BFS 思想。</p>
+<h5 id="题解-5"><a href="#题解-5" class="headerlink" title="题解"></a>题解</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="type">int</span>[] dx = &#123;<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>&#125;;</span><br><span class="line">    <span class="type">int</span>[] dy = &#123;<span class="number">0</span>, <span class="number">1</span>, -<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[][] floodFill(<span class="type">int</span>[][] image, <span class="type">int</span> sr, <span class="type">int</span> sc, <span class="type">int</span> color) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">currColor</span> <span class="operator">=</span> image[sr][sc];</span><br><span class="line">        <span class="keyword">if</span> (currColor == color) &#123;</span><br><span class="line">            <span class="keyword">return</span> image;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> image.length, m = image[<span class="number">0</span>].length;</span><br><span class="line">        Queue&lt;<span class="type">int</span>[]&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;<span class="type">int</span>[]&gt;();</span><br><span class="line">        queue.offer(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;sr, sc&#125;);</span><br><span class="line">        image[sr][sc] = color;</span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">            <span class="type">int</span>[] cell = queue.poll();</span><br><span class="line">            <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> cell[<span class="number">0</span>], y = cell[<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">mx</span> <span class="operator">=</span> x + dx[i], my = y + dy[i];</span><br><span class="line">                <span class="keyword">if</span> (mx &gt;= <span class="number">0</span> &amp;&amp; mx &lt; n &amp;&amp; my &gt;= <span class="number">0</span> &amp;&amp; my &lt; m &amp;&amp; image[mx][my] == currColor) &#123;</span><br><span class="line">                    queue.offer(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;mx, my&#125;);</span><br><span class="line">                    image[mx][my] = color;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> image;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="type">int</span>[] dx = &#123;<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>&#125;;</span><br><span class="line">    <span class="type">int</span>[] dy = &#123;<span class="number">0</span>, <span class="number">1</span>, -<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[][] floodFill(<span class="type">int</span>[][] image, <span class="type">int</span> sr, <span class="type">int</span> sc, <span class="type">int</span> color) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">currColor</span> <span class="operator">=</span> image[sr][sc];</span><br><span class="line">        <span class="keyword">if</span> (currColor != color) &#123;</span><br><span class="line">            dfs(image, sr, sc, currColor, color);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> image;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">dfs</span><span class="params">(<span class="type">int</span>[][] image, <span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span> currColor, <span class="type">int</span> color)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (image[x][y] == currColor) &#123;</span><br><span class="line">            image[x][y] = color;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">mx</span> <span class="operator">=</span> x + dx[i], my = y + dy[i];</span><br><span class="line">                <span class="keyword">if</span> (mx &gt;= <span class="number">0</span> &amp;&amp; mx &lt; image.length &amp;&amp; my &gt;= <span class="number">0</span> &amp;&amp; my &lt; image[<span class="number">0</span>].length) &#123;</span><br><span class="line">                    dfs(image, mx, my, currColor, color);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://rubysiuqvq.github.io/">RubySIU</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://rubysiuqvq.github.io/posts/3285834380/">https://rubysiuqvq.github.io/posts/3285834380/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rubysiuqvq.github.io" target="_blank">RubySIU's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Algorithm/">Algorithm</a><a class="post-meta__tags" href="/tags/Leetcode/">Leetcode</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/2778334380/"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">算法-二分查找</div></div></a></div><div class="next-post pull-right"><a href="/posts/1712439003/"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">力扣-数据结构-第一章</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/1883978472/" title="二叉树的迭代遍历"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-19</div><div class="title">二叉树的迭代遍历</div></div></a></div><div><a href="/posts/3698228794/" title="Floyd 判圈算法"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-13</div><div class="title">Floyd 判圈算法</div></div></a></div><div><a href="/posts/2778334380/" title="算法-二分查找"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-11</div><div class="title">算法-二分查找</div></div></a></div><div><a href="/posts/1712439003/" title="力扣-数据结构-第一章"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-09</div><div class="title">力扣-数据结构-第一章</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#No-278-%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%94%99%E8%AF%AF%E7%89%88%E6%9C%AC"><span class="toc-text">No.278 第一个错误版本</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="toc-text">解题思路</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3"><span class="toc-text">题解</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#No-35-%E6%90%9C%E7%B4%A2%E6%8F%92%E5%85%A5%E4%BD%8D%E7%BD%AE"><span class="toc-text">No.35 搜索插入位置</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-1"><span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-1"><span class="toc-text">解题思路</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3-1"><span class="toc-text">题解</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#No-283-%E7%A7%BB%E5%8A%A8%E9%9B%B6"><span class="toc-text">No.283 移动零</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-2"><span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-2"><span class="toc-text">解题思路</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3-2"><span class="toc-text">题解</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#No-167-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C-II-%E8%BE%93%E5%85%A5%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84"><span class="toc-text">No.167 两数之和 II - 输入有序数组</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-3"><span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-3"><span class="toc-text">解题思路</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3-3"><span class="toc-text">题解</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#No-3-%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2"><span class="toc-text">No.3 无重复字符的最长子串</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-4"><span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-4"><span class="toc-text">解题思路</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3-4"><span class="toc-text">题解</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#No-733-%E5%9B%BE%E5%83%8F%E6%B8%B2%E6%9F%93"><span class="toc-text">No.733 图像渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-5"><span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF-5"><span class="toc-text">解题思路</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3-5"><span class="toc-text">题解</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By RubySIU</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://rubysiuqvq.github.io/posts/3285834380/'
+    this.page.identifier = 'posts/3285834380/'
+    this.page.title = '力扣-算法-第一章'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
