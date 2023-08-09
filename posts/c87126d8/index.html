@@ -1,0 +1,228 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>AI-ConstrainSatisfactionProblem | RubySIU's Blog</title><meta name="keywords" content="Algorithm,Python,AI"><meta name="author" content="RubySIU"><meta name="copyright" content="RubySIU"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1. 专有名词在讨论约束满足问题（CSP）之前，我们先来了解一些专有名词：  变量（Variable）：可以被赋值，即我们我们实际面对的问题，通过对问题中的各个变量进行赋值从而解决问题。 域（Domains）：变量的取值范围。 约束（Constraints）：约束，即每个变量在赋值时要满足的条件，通常与其他变量相关。 约束图（Constraint Graphs）：以变量为节点，约束为边的图。  最">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI-ConstrainSatisfactionProblem">
+<meta property="og:url" content="https://rubysiuqvq.github.io/posts/c87126d8/index.html">
+<meta property="og:site_name" content="RubySIU&#39;s Blog">
+<meta property="og:description" content="1. 专有名词在讨论约束满足问题（CSP）之前，我们先来了解一些专有名词：  变量（Variable）：可以被赋值，即我们我们实际面对的问题，通过对问题中的各个变量进行赋值从而解决问题。 域（Domains）：变量的取值范围。 约束（Constraints）：约束，即每个变量在赋值时要满足的条件，通常与其他变量相关。 约束图（Constraint Graphs）：以变量为节点，约束为边的图。  最">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230808-1.jpg">
+<meta property="article:published_time" content="2023-08-08T02:31:18.000Z">
+<meta property="article:modified_time" content="2023-08-09T12:03:45.531Z">
+<meta property="article:author" content="RubySIU">
+<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230808-1.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://rubysiuqvq.github.io/posts/c87126d8/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'AI-ConstrainSatisfactionProblem',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-08-09 20:03:45'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230808-1.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">RubySIU's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">AI-ConstrainSatisfactionProblem</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-08-08T02:31:18.000Z" title="发表于 2023-08-08 10:31:18">2023-08-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-08-09T12:03:45.531Z" title="更新于 2023-08-09 20:03:45">2023-08-09</time></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="1-专有名词"><a href="#1-专有名词" class="headerlink" title="1. 专有名词"></a>1. 专有名词</h2><p>在讨论约束满足问题（CSP）之前，我们先来了解一些专有名词：</p>
+<ol>
+<li>变量（Variable）：可以被赋值，即我们我们实际面对的问题，通过对问题中的各个变量进行赋值从而解决问题。</li>
+<li>域（Domains）：变量的取值范围。</li>
+<li>约束（Constraints）：约束，即每个变量在赋值时要满足的条件，通常与其他变量相关。</li>
+<li>约束图（Constraint Graphs）：以变量为节点，约束为边的图。</li>
+</ol>
+<p>最常见的搜索问题就是地图填色问题，每块地块就是一个变量，可选的颜色就是域，相邻地块不能同色就是约束。</p>
+<h2 id="2-Standard-Search-Formulation"><a href="#2-Standard-Search-Formulation" class="headerlink" title="2. Standard Search Formulation"></a>2. Standard Search Formulation</h2><p>标准搜索公式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">init state: empty assignment</span><br><span class="line">successor function: assign a  value</span><br><span class="line">goal test: current assignment is  complete and satisfies all constraints</span><br></pre></td></tr></table></figure>
+
+<p>约束满足问题通常使用回溯法来一步步尝试赋值。</p>
+<h2 id="3-Ordering"><a href="#3-Ordering" class="headerlink" title="3. Ordering"></a>3. Ordering</h2><p>排序，在对变量进行复制时，可能某些值是更值得先进行尝试的，因此我们按照一定的顺序进行赋值操作可以优化算法。</p>
+<h3 id="3-2-Minimum-remaining-values"><a href="#3-2-Minimum-remaining-values" class="headerlink" title="3.2 Minimum remaining values"></a>3.2 Minimum remaining values</h3><p>最小剩余值排序，即在赋值操作时，优先选择更容易排除其他选择的赋值，从而快速排除掉非法的值。</p>
+<h3 id="3-3-Least-Constraining-Value"><a href="#3-3-Least-Constraining-Value" class="headerlink" title="3.3 Least Constraining Value"></a>3.3 Least Constraining Value</h3><p>最少约束值，优先选择约束最少的赋值，即</p>
+<h2 id="4-Filtering"><a href="#4-Filtering" class="headerlink" title="4. Filtering"></a>4. Filtering</h2><p>过滤器，用于提前删除不符合约束的值，从而加快求解。</p>
+<h3 id="4-1-Forward-Checking"><a href="#4-1-Forward-Checking" class="headerlink" title="4.1 Forward Checking"></a>4.1 Forward Checking</h3><p>向前检查，对当前进行赋值操作时，向前删除掉与当前赋值冲突的候选值。</p>
+<h3 id="4-2-Constraint-Propagation"><a href="#4-2-Constraint-Propagation" class="headerlink" title="4.2 Constraint Propagation"></a>4.2 Constraint Propagation</h3><p>约束传播。</p>
+<p>此处有一个概念叫做弧一致性（Consistency of arc），即两个相邻节点 x 和 y，假想一个有向边从 y 指向 x，x 为头（head），y 为尾（tail），弧一致性要求：对于任意的 y 的取值，都存在一个 x 可以被赋值，如果满足一致性，则从 y 中删除不满足的取值。</p>
+<blockquote>
+<p>需要注意，当 x 的域发生变化时，会导致一致性失效，此时就需要重新计算一致性。</p>
+</blockquote>
+<p>采用此过滤方法的算法是 AC3 算法。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://rubysiuqvq.github.io/">RubySIU</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://rubysiuqvq.github.io/posts/c87126d8/">https://rubysiuqvq.github.io/posts/c87126d8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rubysiuqvq.github.io" target="_blank">RubySIU's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Algorithm/">Algorithm</a><a class="post-meta__tags" href="/tags/Python/">Python</a><a class="post-meta__tags" href="/tags/AI/">AI</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/posts/2e3b3810/"><img class="next-cover" src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230807-1.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">AI-SearchProblem</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/2e3b3810/" title="AI-SearchProblem"><img class="cover" src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230807-1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-03</div><div class="title">AI-SearchProblem</div></div></a></div><div><a href="/posts/1883978472/" title="二叉树的迭代遍历"><img class="cover" src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230525-1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-19</div><div class="title">二叉树的迭代遍历</div></div></a></div><div><a href="/posts/3698228794/" title="Floyd 判圈算法"><img class="cover" src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230525-3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-13</div><div class="title">Floyd 判圈算法</div></div></a></div><div><a href="/posts/2778334380/" title="算法-二分查找"><img class="cover" src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230525-2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-11</div><div class="title">算法-二分查找</div></div></a></div><div><a href="/posts/3285834380/" title="力扣-算法-第一章"><img class="cover" src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230525-8.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-11</div><div class="title">力扣-算法-第一章</div></div></a></div><div><a href="/posts/b12de024/" title="Python 爬虫之 Selenium 库"><img class="cover" src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230528-1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-25</div><div class="title">Python 爬虫之 Selenium 库</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D"><span class="toc-text">1. 专有名词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Standard-Search-Formulation"><span class="toc-text">2. Standard Search Formulation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Ordering"><span class="toc-text">3. Ordering</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Minimum-remaining-values"><span class="toc-text">3.2 Minimum remaining values</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-Least-Constraining-Value"><span class="toc-text">3.3 Least Constraining Value</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Filtering"><span class="toc-text">4. Filtering</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-Forward-Checking"><span class="toc-text">4.1 Forward Checking</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-Constraint-Propagation"><span class="toc-text">4.2 Constraint Propagation</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By RubySIU</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://rubysiuqvq.github.io/posts/c87126d8/'
+    this.page.identifier = 'posts/c87126d8/'
+    this.page.title = 'AI-ConstrainSatisfactionProblem'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

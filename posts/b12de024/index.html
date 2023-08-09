@@ -1,0 +1,338 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Python 爬虫之 Selenium 库 | RubySIU's Blog</title><meta name="keywords" content="Spider,Python,Selenium"><meta name="author" content="RubySIU"><meta name="copyright" content="RubySIU"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1. 获取浏览器123from selenium import webdriverdriver &#x3D; webdriver.Chrome()  获取浏览器句柄后我们就可以调用其 api 来执行各种方法，模拟我们对浏览器的操作。 get 方法会等待网页打开后返回，但不会等待 ajax，因此对于使用 ajax 的网页建议睡眠一段时间或者使用 wait 方法。  可以通过 driver 对象的属性和方法获取">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 爬虫之 Selenium 库">
+<meta property="og:url" content="https://rubysiuqvq.github.io/posts/b12de024/index.html">
+<meta property="og:site_name" content="RubySIU&#39;s Blog">
+<meta property="og:description" content="1. 获取浏览器123from selenium import webdriverdriver &#x3D; webdriver.Chrome()  获取浏览器句柄后我们就可以调用其 api 来执行各种方法，模拟我们对浏览器的操作。 get 方法会等待网页打开后返回，但不会等待 ajax，因此对于使用 ajax 的网页建议睡眠一段时间或者使用 wait 方法。  可以通过 driver 对象的属性和方法获取">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230528-1.jpg">
+<meta property="article:published_time" content="2023-05-25T13:57:21.000Z">
+<meta property="article:modified_time" content="2023-08-09T12:03:45.533Z">
+<meta property="article:author" content="RubySIU">
+<meta property="article:tag" content="Spider">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Selenium">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230528-1.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://rubysiuqvq.github.io/posts/b12de024/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Python 爬虫之 Selenium 库',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-08-09 20:03:45'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">31</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230528-1.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">RubySIU's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Python 爬虫之 Selenium 库</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-05-25T13:57:21.000Z" title="发表于 2023-05-25 21:57:21">2023-05-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-08-09T12:03:45.533Z" title="更新于 2023-08-09 20:03:45">2023-08-09</time></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h4 id="1-获取浏览器"><a href="#1-获取浏览器" class="headerlink" title="1. 获取浏览器"></a>1. 获取浏览器</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"></span><br><span class="line">driver = webdriver.Chrome()</span><br></pre></td></tr></table></figure>
+
+<p>获取浏览器句柄后我们就可以调用其 api 来执行各种方法，模拟我们对浏览器的操作。</p>
+<p>get 方法会等待网页打开后返回，但不会等待 ajax，因此对于使用 ajax 的网页建议睡眠一段时间或者使用 wait 方法。</p>
+<blockquote>
+<p>可以通过 driver 对象的属性和方法获取一些存储在浏览器中的数据</p>
+</blockquote>
+<h4 id="2-访问-url"><a href="#2-访问-url" class="headerlink" title="2. 访问 url"></a>2. 访问 url</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.get(<span class="string">&quot;https://www.baidu.com&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>通过 get 方法访问一个网页，返回的信息会存储在 driver 对象中，driver 就相当于一个浏览器，存储了所有返回的信息。</p>
+<h4 id="3-获取网页中的各个元素"><a href="#3-获取网页中的各个元素" class="headerlink" title="3. 获取网页中的各个元素"></a>3. 获取网页中的各个元素</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By</span><br><span class="line"></span><br><span class="line">text_input = driver.find_element(By.CSS_SELECTOR, <span class="string">&quot;#kw&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在最新的 selenium 4.9 中，使用 find_element 系列的方法更换了新的 api。</p>
+<p>该方法返回一个 element 对象，可以对其进行操作。如果存在多个匹配，则只返回第一个。</p>
+<p>使用 find_elements 系列方法可以返回 element 对象的列表。</p>
+<p>该方法系列有以下方法（注意使用小写）：</p>
+<blockquote>
+<ul>
+<li>FIND_ELEMENT(By.ID, “”)</li>
+<li>FIND_ELEMENT(By.NAME, “”)</li>
+<li>FIND_ELEMENT(By.XPATH, “”)</li>
+<li>FIND_ELEMENT(By.LINK_TEXT, “”)</li>
+<li>FIND_ELEMENT(By.PARTIAL_LINK_TEXT, “”)</li>
+<li>FIND_ELEMENT(By.TAG_NAME, “”)</li>
+<li>FIND_ELEMENT(By.CLASS_NAME, “”)</li>
+<li>FIND_ELEMENT(By.CSS_SELECTOR, “”)</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>FIND_ELEMENTS(By.ID, “”)</li>
+<li>FIND_ELEMENTS(By.NAME, “”)</li>
+<li>FIND_ELEMENTS(By.XPATH, “”)</li>
+<li>FIND_ELEMENTS(By.LINK_TEXT, “”)</li>
+<li>FIND_ELEMENTS(By.PARTIAL_LINK_TEXT, “”)</li>
+<li>FIND_ELEMENTS(By.TAG_NAME, “”)</li>
+<li>FIND_ELEMENTS(By.CLASS_NAME, “”)</li>
+<li>FIND_ELEMENTS(By.CSS_SELECTOR, “”)</li>
+</ul>
+</blockquote>
+<p>这些方法没有找到时会抛出异常。</p>
+<h4 id="4-模拟键盘操作"><a href="#4-模拟键盘操作" class="headerlink" title="4. 模拟键盘操作"></a>4. 模拟键盘操作</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">text.send_keys(<span class="string">&quot;饥荒&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>send_keys 接受一个 <code>*value</code> 参数，这是一个可变参数，说明可以传入多个键以实现组合键效果。</p>
+<p><code>from selenium.webdriver.common.keys import Keys</code> 可以导入功能键：</p>
+<ul>
+<li><p>Keys.ENTER </p>
+</li>
+<li><p>Keys.BACK_SPACE</p>
+</li>
+<li><p>Keys.SPACE</p>
+</li>
+<li><p>Keys.TAB</p>
+</li>
+<li><p>Keys.ESCAPE</p>
+</li>
+<li><p>Keys.F系列功能键</p>
+</li>
+</ul>
+<blockquote>
+<p>全部枚举值请查看文档</p>
+</blockquote>
+<h4 id="5-Select-元素"><a href="#5-Select-元素" class="headerlink" title="5. Select 元素"></a>5. Select 元素</h4><p>对于下拉列表元素，虽然我们可以通过遍历其所有 option 标签来选中，但这是比较复杂。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium.webdriver.support.ui <span class="keyword">import</span> Select</span><br><span class="line">select = Select(driver.find_element_by_name(<span class="string">&#x27;name&#x27;</span>))</span><br><span class="line">select.select_by_index(index) <span class="comment"># 通过索引选择</span></span><br><span class="line">select.select_by_visible_text(<span class="string">&quot;text&quot;</span>) <span class="comment"># 通过可见的文本选择</span></span><br><span class="line">select.select_by_value(value) <span class="comment"># 通过其 value 值选择</span></span><br><span class="line"><span class="comment"># 可见文本是被标签包含的字符串，value 则是 option 的属性。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 取消选择的方法</span></span><br><span class="line">select = Select(driver.find_element_by_name(<span class="string">&#x27;name&#x27;</span>))</span><br><span class="line">select.deselect_by_index(index) </span><br><span class="line">select.deselect_by_visible_text(<span class="string">&quot;text&quot;</span>) </span><br><span class="line">select.deselect_by_value(value) </span><br><span class="line">select.deselect_all()</span><br></pre></td></tr></table></figure>
+
+<p>selenium 提供了处理下拉列表的类型，使用 element 对象创建一个 select 对象，使用其方法就可以选择其中的 option。</p>
+<p>select 对象提供了一些属性用于获得一些有用的信息。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select.options <span class="comment"># 以 element 对象列出所有的选项</span></span><br><span class="line">select.all_selected_options <span class="comment"># 列出所有被选择的选项</span></span><br><span class="line">select.first_selected_option <span class="comment"># 列出第一个被选择的选项</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="6-Action-Chains"><a href="#6-Action-Chains" class="headerlink" title="6. Action Chains"></a>6. Action Chains</h4><p>ActionChains 对象，顾名思义，一个动作链，其设置的动作会被保存，但不会马上执行，而是会在调用其 perform 方法后连续执行所有动作。</p>
+<p>使用 driver 创建一个 ActionChains 对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">action_chains = ActionChains(driver)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 该对象提供以下方法。</span></span><br><span class="line">action_chains.click(elem) <span class="comment"># 点击</span></span><br><span class="line">action_chains.click_and_hold(elem) <span class="comment"># 点击并按住</span></span><br><span class="line">action_chains.release(elem) <span class="comment"># 松开鼠标</span></span><br><span class="line">action_chains.context_click(elem) <span class="comment"># 右键点击</span></span><br><span class="line">action_chains.double_click(elem) <span class="comment"># 双击</span></span><br><span class="line">action_chains.drag_and_drop(source_elem, target_elem) <span class="comment"># 从 soruce 拖动到 target</span></span><br><span class="line"><span class="comment"># 拖动方法可以分解为 click_and_hole(source) + release(target)</span></span><br><span class="line">action_chains.key_down(value, elem) <span class="comment"># 按住按键，key 可以取字符或者 Keys 值</span></span><br><span class="line">action_chains.key_up(value, elem) <span class="comment"># 松开按键</span></span><br><span class="line">action_chains.pause(seconds) <span class="comment"># 暂停x秒</span></span><br><span class="line">action_chains.send_keys(*keys)</span><br><span class="line">action_chains.send_keys_to_element(elem, *keys)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">action_chains.perform() <span class="comment"># 执行动作链</span></span><br><span class="line">action_chains.reset_actions() <span class="comment"># 清空动作链</span></span><br><span class="line">action_chains.</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="7-切换窗口"><a href="#7-切换窗口" class="headerlink" title="7. 切换窗口"></a>7. 切换窗口</h4><p>window 和 frame 均属于窗口的范围。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cur_handle = dirver.current_handle <span class="comment"># 存储当前窗口句柄以回到该窗口</span></span><br><span class="line">handles = driver.window_handles <span class="comment"># 获取所有窗口句柄</span></span><br><span class="line"><span class="keyword">for</span> handle <span class="keyword">in</span> handles:</span><br><span class="line">    <span class="keyword">if</span> is_correct(handle): <span class="comment"># 判断是否是需要的窗口</span></span><br><span class="line">    driver.switch_to.window(window_handle)</span><br><span class="line">    <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<p>通过遍历句柄，判断是否是所需要切换的窗口。判断的方法多种多样。</p>
+<p>对于 frame 的切换则灵活的多。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">driver.switch_to.frame(<span class="string">&quot;frame&quot;</span>) <span class="comment"># 此处传入 frame 标签的 id 或者 name</span></span><br><span class="line">driver.switch_to.frame(<span class="built_in">int</span>) <span class="comment"># 传入一个从 0 开始计数的索引，切换到对应索引的 frame</span></span><br><span class="line">driver.switch_to.frame(elem) <span class="comment"># 直接传入已经定位的 frame 元素</span></span><br><span class="line"></span><br><span class="line">driver.switch_to.default_context() <span class="comment"># 切换到主网页</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在 frame 中不能访问到主网页或其他 frame 的内容，也不能直接切换到其他 frame。</p>
+<p>对话框也被视为子窗口。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.switch_to.alert() <span class="comment"># 切换到对话框</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="8-前进后退"><a href="#8-前进后退" class="headerlink" title="8. 前进后退"></a>8. 前进后退</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">driver.forward()</span><br><span class="line">driver.back()</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="9-Cookies"><a href="#9-Cookies" class="headerlink" title="9. Cookies"></a>9. Cookies</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">driver.add_cookie(cookie)</span><br><span class="line">driver.get_cookies()</span><br><span class="line">driver.get_cookie(name)</span><br><span class="line">driver.delete_cookie(name)</span><br><span class="line">driver.delete_all_cookies()</span><br></pre></td></tr></table></figure>
+
+<p>构建 cookie_dict 时可以使用以下键值对：</p>
+<ol>
+<li><p>name：cookie 的名称</p>
+</li>
+<li><p>value：cookie 的值</p>
+</li>
+<li><p>expire：过期时间，GMT格式，过期失效。</p>
+</li>
+<li><p>max-age：与上一个二选一，使用整数以秒表示。</p>
+<blockquote>
+<p>寿命的默认值为 session，即在一个 session 内生效。</p>
+</blockquote>
+</li>
+<li><p>domain：cookie 所属的域。</p>
+</li>
+<li><p>path：cookie 所属路径。</p>
+</li>
+<li><p>secure：cookie 是否使用 https 传输。</p>
+</li>
+<li><p>httponly：必须使用 http&#x2F;https 传输。</p>
+</li>
+</ol>
+<h4 id="10-等待页面加载"><a href="#10-等待页面加载" class="headerlink" title="10. 等待页面加载"></a>10. 等待页面加载</h4><p>使用 ajax 技术的网站并不会一次返回所有的页面信息，因此我们需要等待页面加载完毕后进行操作。</p>
+<p>最简单的是使用 time.sleep() 方法直接睡眠一段时间，但这种方法并不推荐，webdriver 提供了合适的等待方法。</p>
+<p>webdriver 提供了两种等待 watis，即显示等待和隐式等待：</p>
+<ol>
+<li>显示等待：让 webdriver 等待满足一定条件后执行。</li>
+<li>隐式等待：让 webdriver 等待一定事件后查找某元素。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    element = WebDriverWait(driver, seconds).until(</span><br><span class="line">        EC.presence_of_element_located((By.ID, <span class="string">&quot;id&quot;</span>))</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<p>WebDriverWait 默认每 500ms 调用一次 EC（ExceptedCondition）方法，该系列方法执行成功后返回 true 或者不为 null 的值。</p>
+<p>EC 中内置了许多方法可以用于判断某特定条件是否出现。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.implicitly_wait(seconds)</span><br></pre></td></tr></table></figure>
+
+<p>每次与元素互动都会等待指定时长。</p>
+<h4 id="11-页面对象"><a href="#11-页面对象" class="headerlink" title="11. 页面对象"></a>11. 页面对象</h4><p>以面向对象的设计思想将测试代码和操作实现代码分离。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://rubysiuqvq.github.io/">RubySIU</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://rubysiuqvq.github.io/posts/b12de024/">https://rubysiuqvq.github.io/posts/b12de024/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://rubysiuqvq.github.io" target="_blank">RubySIU's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Spider/">Spider</a><a class="post-meta__tags" href="/tags/Python/">Python</a><a class="post-meta__tags" href="/tags/Selenium/">Selenium</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/2e3b3810/"><img class="prev-cover" src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230807-1.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">AI-SearchProblem</div></div></a></div><div class="next-post pull-right"><a href="/posts/1569147331/"><img class="next-cover" src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230523-2.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CSS 选择器语法</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/4262848743/" title="Python 爬虫之 BeautifulSoup 库"><img class="cover" src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230523-1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-23</div><div class="title">Python 爬虫之 BeautifulSoup 库</div></div></a></div><div><a href="/posts/1569147331/" title="CSS 选择器语法"><img class="cover" src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230523-2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-23</div><div class="title">CSS 选择器语法</div></div></a></div><div><a href="/posts/c87126d8/" title="AI-ConstrainSatisfactionProblem"><img class="cover" src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230808-1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-08</div><div class="title">AI-ConstrainSatisfactionProblem</div></div></a></div><div><a href="/posts/2e3b3810/" title="AI-SearchProblem"><img class="cover" src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230807-1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-03</div><div class="title">AI-SearchProblem</div></div></a></div><div><a href="/posts/2213647024/" title="Python 的变量作用域问题"><img class="cover" src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/custom/20230422-1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-04</div><div class="title">Python 的变量作用域问题</div></div></a></div><div><a href="/posts/4067534898/" title="Python 闭包"><img class="cover" src="https://ruby-blog-img.oss-cn-hangzhou.aliyuncs.com/favorite/20230504-1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-04</div><div class="title">Python 闭包</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E8%8E%B7%E5%8F%96%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="toc-text">1. 获取浏览器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%AE%BF%E9%97%AE-url"><span class="toc-text">2. 访问 url</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E8%8E%B7%E5%8F%96%E7%BD%91%E9%A1%B5%E4%B8%AD%E7%9A%84%E5%90%84%E4%B8%AA%E5%85%83%E7%B4%A0"><span class="toc-text">3. 获取网页中的各个元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E6%A8%A1%E6%8B%9F%E9%94%AE%E7%9B%98%E6%93%8D%E4%BD%9C"><span class="toc-text">4. 模拟键盘操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Select-%E5%85%83%E7%B4%A0"><span class="toc-text">5. Select 元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-Action-Chains"><span class="toc-text">6. Action Chains</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-%E5%88%87%E6%8D%A2%E7%AA%97%E5%8F%A3"><span class="toc-text">7. 切换窗口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-%E5%89%8D%E8%BF%9B%E5%90%8E%E9%80%80"><span class="toc-text">8. 前进后退</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-Cookies"><span class="toc-text">9. Cookies</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-%E7%AD%89%E5%BE%85%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD"><span class="toc-text">10. 等待页面加载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11-%E9%A1%B5%E9%9D%A2%E5%AF%B9%E8%B1%A1"><span class="toc-text">11. 页面对象</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By RubySIU</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://rubysiuqvq.github.io/posts/b12de024/'
+    this.page.identifier = 'posts/b12de024/'
+    this.page.title = 'Python 爬虫之 Selenium 库'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
