@@ -5,12 +5,18 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>深入浅出决定系数R2 | RubySIU&#39;s Blog</title>
+<title>深度学习之分类问题 | RubySIU&#39;s Blog</title>
 <meta name="keywords" content="">
-<meta name="description" content="决定系数$R^2$是一个在数学或者说统计学常见的评价标准，尤其是对于回归问题，模型的好坏完全可以用只通过$R^2$来衡量。
-但是在使用这个指标之前我们有必要了解其背后的原理，尤其是和另一个非常容易混淆的相关系数$R$的关系。">
+<meta name="description" content="一、构建一个分类模型的三种方法
+
+判别函数：直接建模一个函数将输入映射到分类，例如支持向量机。
+判别式概率模型：建模一个条件概率模型 $p(C_k|x)$ ，根据输出的概率选择其分类结果，通常概率最高的类别就是分类类别。
+生成式概率模型：首先建模条件概率 $p(x|C_k)$，然后根据先验概率 $p(C_k)$ 通过贝叶斯公式 $p(C_k|x)=\frac{p(x|C_k)p(C_k)}{p(x)}$ 得出后验概率分布，使用后验概率分布进行分类。
+
+
+$x$ 表示输入向量，$C_k$ 表示 k 个分类类别。">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/knowledge/2024/what-is-r-square/">
+<link rel="canonical" href="http://localhost:1313/knowledge/2025/classification-problem-in-deeplearning/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.54405a410796490bc874ab6181fac9b675753cc2b91375d8f882566459eca428.css" integrity="sha256-VEBaQQeWSQvIdKthgfrJtnV1PMK5E3XY&#43;IJWZFnspCg=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
@@ -19,7 +25,7 @@
 <link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/knowledge/2024/what-is-r-square/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/knowledge/2025/classification-problem-in-deeplearning/">
 <noscript>
     <style>
         #theme-toggle,
@@ -118,9 +124,15 @@
   <header class="post-header">
     
     <h1 class="post-title entry-hint-parent">
-      深入浅出决定系数R2
+      深度学习之分类问题
+      <span class="entry-hint" title="Draft">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
+          <path
+            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+        </svg>
+      </span>
     </h1>
-    <div class="post-meta"><span title='2024-11-06 15:48:37 +0800 CST'>November 6, 2024</span>&nbsp;·&nbsp;4 min
+    <div class="post-meta"><span title='2025-02-15 09:54:01 +0800 CST'>February 15, 2025</span>&nbsp;·&nbsp;4 min
 
 </div>
   </header> <div class="toc">
@@ -131,70 +143,110 @@
 
         <div class="inner"><ul>
                 <li>
-                    <a href="#%e4%b8%80%e5%9b%9e%e5%bd%92%e9%97%ae%e9%a2%98" aria-label="一、回归问题">一、回归问题</a></li>
+                    <a href="#%e4%b8%80%e6%9e%84%e5%bb%ba%e4%b8%80%e4%b8%aa%e5%88%86%e7%b1%bb%e6%a8%a1%e5%9e%8b%e7%9a%84%e4%b8%89%e7%a7%8d%e6%96%b9%e6%b3%95" aria-label="一、构建一个分类模型的三种方法">一、构建一个分类模型的三种方法</a></li>
                 <li>
-                    <a href="#%e4%ba%8c%e7%9b%b8%e5%85%b3%e7%b3%bb%e6%95%b0" aria-label="二、相关系数">二、相关系数</a></li>
+                    <a href="#%e4%ba%8c%e5%88%a4%e5%88%ab%e5%87%bd%e6%95%b0" aria-label="二、判别函数">二、判别函数</a><ul>
+                        
                 <li>
-                    <a href="#%e4%b8%89%e5%86%b3%e5%ae%9a%e7%b3%bb%e6%95%b0" aria-label="三、决定系数">三、决定系数</a></li>
+                    <a href="#1-%e4%ba%8c%e5%88%86%e7%b1%bb%e9%97%ae%e9%a2%98" aria-label="1. 二分类问题">1. 二分类问题</a></li>
                 <li>
-                    <a href="#%e5%9b%9b%e5%86%b3%e5%ae%9a%e7%b3%bb%e6%95%b0%e7%9a%84%e6%b7%b1%e5%b1%82%e5%90%ab%e4%b9%89" aria-label="四、决定系数的深层含义">四、决定系数的深层含义</a></li>
+                    <a href="#2-%e5%a4%9a%e5%88%86%e7%b1%bb%e9%97%ae%e9%a2%98" aria-label="2. 多分类问题">2. 多分类问题</a></li>
                 <li>
-                    <a href="#%e4%ba%94%e5%86%b3%e5%ae%9a%e7%b3%bb%e6%95%b0%e7%9a%84%e7%bc%ba%e9%99%b7" aria-label="五、决定系数的缺陷">五、决定系数的缺陷</a>
+                    <a href="#3-one-hot-%e7%bc%96%e7%a0%81" aria-label="3. one-hot 编码">3. one-hot 编码</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e7%b1%bb%e5%88%ab%e4%b8%8d%e5%b9%b3%e8%a1%a1%e9%97%ae%e9%a2%98" aria-label="类别不平衡问题">类别不平衡问题</a>
                 </li>
             </ul>
         </div>
     </details>
 </div>
 
-  <div class="post-content"><p>决定系数$R^2$是一个在数学或者说统计学常见的评价标准，尤其是对于回归问题，模型的好坏完全可以用只通过$R^2$来衡量。</p>
-<p>但是在使用这个指标之前我们有必要了解其背后的原理，尤其是和另一个非常容易混淆的相关系数$R$的关系。</p>
-<h2 id="一回归问题">一、回归问题<a hidden class="anchor" aria-hidden="true" href="#一回归问题">#</a></h2>
-<p>相关系数和决定系数都是评价回归模型的指标，因此我们先了解什么是回归问题。</p>
-<p>所谓回归就是研究一组随机变量$Y_1,Y_2&hellip;Y_n$和另一组随机变量$X_1,X_2&hellip;X_n$之间的关系的统计分析方法。通常我们可以将两组变量的关系简单的划分为线性和非线性，对应的就是线性回归和非线性回归。简单地说线性回归下两组随机变量之间的关系基本可以使用一条直线来表示，而不能使用直线表示的就是非线性回归。</p>
-<h2 id="二相关系数">二、相关系数<a hidden class="anchor" aria-hidden="true" href="#二相关系数">#</a></h2>
-<p>相关系数有很多不同的定义，例如最常用的 Pearson 相关系数用于衡量两个变量之间的线性关系，Spearman 相关系数用于衡量两个变量之间的单调关系。</p>
-<p>此处只讨论最常用的 Pearson 相关系数，其计算公式如下：
-$$
-r=\frac{\sum(x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum(x_i-\bar x)^2\sum(y_i-\bar y)^2}}
-$$
-其中$\bar x, \bar y$分别表示样本的平均值。实际上该公式可以简化为两个变量的协方差与两个变量方差乘积的比值。但我们不想在此处深入讨论该公式的含义，我们只需要知道相关系数的取值范围在 -1 到 1 范围内，越接近 1 表示正相关，越接近 -1 表示负相关，接近 0 表示两者没有<strong>线性相关性</strong>。</p>
-<h2 id="三决定系数">三、决定系数<a hidden class="anchor" aria-hidden="true" href="#三决定系数">#</a></h2>
-<p>决定系数是衡量模型的拟合值或预测值与真实值之间的相似程度。</p>
+  <div class="post-content"><h2 id="一构建一个分类模型的三种方法">一、构建一个分类模型的三种方法<a hidden class="anchor" aria-hidden="true" href="#一构建一个分类模型的三种方法">#</a></h2>
+<ol>
+<li>判别函数：直接建模一个函数将输入映射到分类，例如支持向量机。</li>
+<li>判别式概率模型：建模一个条件概率模型 $p(C_k|x)$ ，根据输出的概率选择其分类结果，通常概率最高的类别就是分类类别。</li>
+<li>生成式概率模型：首先建模条件概率 $p(x|C_k)$，然后根据先验概率 $p(C_k)$ 通过贝叶斯公式 $p(C_k|x)=\frac{p(x|C_k)p(C_k)}{p(x)}$ 得出后验概率分布，使用后验概率分布进行分类。</li>
+</ol>
 <blockquote>
-<p>需要注意的是，相关系数衡量两个随机变量之间的线性相关性，实际上可以理解为衡量因变量和自变量之间的线性相关性。</p>
-<p>但是决定系数是衡量真实样本的因变量和模型模拟的因变量之间的相似程度，两者在含义上完全不同</p>
+<p>$x$ 表示输入向量，$C_k$ 表示 k 个分类类别。</p>
+<p>在生成式概率模型中，由于建模了 $p(x|C_k)$ ，所以可以使用模型生成新的样本 $x$ ，因此称之为生成式模型。</p>
 </blockquote>
-<p>决定系数的公式如下：
+<h2 id="二判别函数">二、判别函数<a hidden class="anchor" aria-hidden="true" href="#二判别函数">#</a></h2>
+<h3 id="1-二分类问题">1. 二分类问题<a hidden class="anchor" aria-hidden="true" href="#1-二分类问题">#</a></h3>
+<p>对于一个二分类问题构建决策函数：
 $$
-\begin{align*}
-r^2 &amp;= \frac{SSR}{SST} = 1 - \frac{SSE}{SST} \newline
-SST &amp;= SSR + SSE = \sum (y - \bar{y})^2 \newline
-SSR &amp;= \sum (\hat{y} - \bar{y})^2 \newline
-SSE &amp;= \sum (y - \hat{y})^2
-\end{align*}
+y(x)=\textbf w^Tx+\textbf w_0
 $$
-在线性回归问题中，可以代入$\hat y=ax+b$，推导后发现决定系数等于相关系数的平方。</p>
-<p>但是在非线性回归问题中，不可以将两者划为平方关系，因为其计算方法和含义完全不同。</p>
-<h2 id="四决定系数的深层含义">四、决定系数的深层含义<a hidden class="anchor" aria-hidden="true" href="#四决定系数的深层含义">#</a></h2>
-<p>本文我们主要讨论决定系数，因此我们要了解一下决定系数到底评价了什么。</p>
-<p>对于以下形式的决定系数计算公式：
+则决策面就是 $y(x)=0$ 所代表的超平面，通过该决策面作为边界进行分类。</p>
+<p>在这个决策函数中，其参数的含义如下：</p>
+<ol>
+<li>$\textbf w$ 决定了决策面的方向，因为 $\textbf w$ 一定与决策面正交。</li>
+<li>$\textbf w_0$ 决定了决策面的偏移量。</li>
+<li>$y(x)$ 的值与其代表的点与决策面的距离成正比，正负则代表了在决策面的哪一侧。</li>
+</ol>
+<h3 id="2-多分类问题">2. 多分类问题<a hidden class="anchor" aria-hidden="true" href="#2-多分类问题">#</a></h3>
+<p>在多分类问题中，如果照搬二分类中超平面的方法，会导致决策空间中存在模棱两可的区域。无论是 one-vs-the-rest 还是 one-vs-one 方法都不能避免。</p>
+<blockquote>
+<p>one-vs-the-rest 表示使用一个决策面，将当前类别和其他所有类别区分，通过 k 个决策面实现 k 分类。</p>
+<p>one-vs-one 表示使用一个决策面，将当前类别和另一个类别区分，通过 k(k-1) 个决策面实现 k 分类。</p>
+</blockquote>
+<p>但是我们仍然可以使用判别函数，考虑由 k 个线性判别函数组成的 k 分类器。
 $$
-r^2=1-\frac{\sum(y-\hat y)^2}{\sum(y-\bar y)^2}
+y_k(x)=\textbf w_k^T(x) + \textbf w_{k0}
 $$
-我们对比另一个评价指标MSE：
+k 表示 k 个判别函数。此时将 x 的类别定义为使 $y_k(x)$ 最大的类别，即当 $y_k(x)&gt;y_j(x),j\neq k$ 时，认为 x 输入类别 k。</p>
+<p>此时类别 $C_k$ 和类别 $C_j$ 之间的超平面由
 $$
-MSE=\frac{\sum(y-\hat y)^2}{n}
+y_k(x)-y_j(x)=(\textbf w_k^T-\textbf w_j^T)x+(\textbf w_{k0}-\textbf w_{j0})=0
 $$
-假如我们将 $\bar y$也视为一个模型的预测，只是这个模型固定输出均值作为预测值。那么决定系数的分式项就可以理解为我们的模型和均值模型的预测值对真实值的方差之比，这个分式就衡量了我们的模型相比于均值模型的好坏程度。</p>
-<p>这种说法可能比较别扭，我们换另一个思路来理解。</p>
-<p>假设我们已经建立一个模型，现在我们想要评价一下他的性能，于是我们计算了MSE。我们知道均方误差的最小值为 0，因此 MSE=0 的时候模型是最好的，这代表模型的预测没有任何误差。但是 MSE 的上限在哪里呢？</p>
-<p>很显然没有上限，我的模型完全可以天马行空的给出预测值。所以我们需要一个标准，能够限定 MSE 上限的标准。自然的，我们想到了均值模型，我们暂且称其为非熟练（unskilled）模型。我们规定 MSE 的上限应该是非熟练模型的 MSE，超过此值的模型应该是错误的或者完全不起作用的。</p>
-<p>通过进行最大最小值归一化，我们将 MSE 缩放到了 0-1 之间，为了符合习惯，我们用 1 减去这个值，将最好模型指标设置为 1，最差的模型指标设置为 0。而均方根误差的除以样本数量的操作在分式中被抵消了，由此我们得到了相同的决定系数公式。此时决定系数就代表了熟练模型的拟合效果，其最高可以完全拟合，最低则相当于非熟练模型（此处为均值模型）。</p>
-<p>但是很显然我们建立的模型可能效果还不如均值模型，所以决定系数实际上可以为负值，表示我们建立的模型不如直接使用均值。</p>
-<h2 id="五决定系数的缺陷">五、决定系数的缺陷<a hidden class="anchor" aria-hidden="true" href="#五决定系数的缺陷">#</a></h2>
-<p>前面我们说决定系数实际上和均值模型有关，而均值模型的均值是一个样本内指标，这是传统统计学的方法。但是机器学习要求我们在样本外进行评估。也许有人说，我们明明已经划分了训练集和测试集，所有的评估都是在测试集上进行的。但这其中仍然隐藏着数据泄露的问题，数据不是泄露给了机器学习模型，而是泄露给了均值模型。</p>
-<p>当我们在测试集上计算决定系数的时候，我们使用测试集的样本均值作为了非熟练模型的结果，此时就发生了数据泄露问题。对于均值模型来说，他已经知道了测试集的均值，而我们的机器学习模型对测试集则是一无所知，这里就发生了数据泄露。因此决定系数使用均值模型来衡量机器学习模型的好坏是不公平的。</p>
-<p>所以一个更好的指标是样本外决定系数（out of sample R square），我们不再使用测试集均值，而是使用<strong>训练集均值</strong>作为测试集均值模型的输出。此时均值模型对测试集也是一无所知的状态。这种方法可以更公平准确的判断模型的效果。</p>
+给出。这种方法建立起来的判别区域一定是<strong>单连通且凸</strong>的（singly connected and convex）。</p>
+<blockquote>
+<p>所谓单连通是指区域内没有任何空洞或者开口，即整个区域是一个有限整体。例如一个实心圆内部的区域是单连通的，但是内部加一个同心圆，则外部的圆不再是单连通的。</p>
+<p>所谓凸是指，在区域内任取两点，则两点连线之间的任何点也在这个区域内。</p>
+</blockquote>
+<h3 id="3-one-hot-编码">3. one-hot 编码<a hidden class="anchor" aria-hidden="true" href="#3-one-hot-编码">#</a></h3>
+<p>对于多变量分类的目标值，我们通常采用 one-hot 编码来表示其所属的类别。这种编码的含义是，输入变量分类到正确类别的概率为 1，分类到其他类别的概率为 0。</p>
+<p>使用 one-hot 编码时同样可以使用最小二乘法进行建模。例如对于以下判别函数：
+$$
+y_k(x)=\textbf w_k^Tx+\textbf w_{k0}
+$$
+我们采用增广矩阵 $\tilde W_k^T=(w_{k0},w_k^T),\tilde x=(1,x)$ 来简化表示为
+$$
+y_k(x)=\tilde W^T\tilde x
+$$
+对于训练数据 ${x_n,tn}$ 表示为 ${X,T}$，其中 $X$ 每一行代表一个输入 $x$ ，$T$ 每一行代表一个目标 ont-hot $t$，构建平方和误差函数
+$$
+E_D(\tilde W)=\frac{1}{2}{ (\tilde W \tilde X - T)^T(\tilde W \tilde X-T)}
+$$
+使用最小二乘法最小化该误差函数，令其为零，则有
+$$
+\tilde W =\tilde X^{\dagger} T
+$$
+其中 $\tilde X^{\dagger}$ 表示 $\tilde X$ 的伪逆。</p>
+<p>可得
+$$
+y(x)=\tilde W^T\tilde X=\tilde X^{\dagger}T\tilde x
+$$
+从而得到判别函数。</p>
+<blockquote>
+<p>在最小二乘法中有一个特性，即若 t 满足 $a_n^T t_n+b=0$ ,其中 $a_n^T,b$ 都是常数向量，则有 $a_n^Ty(x)+b=0$。这可以证明当 $t_n$ 作为 one-hot 编码表示的概率之和为 1 时，则使用判别公式得到的概率分布之和同样为 1，但是不能保证每个概率值都在 0~1 之间。</p>
+</blockquote>
+<p>需要注意的是，由于最小二乘是噪声符合高斯分布时极大似然的特殊形式，所以如果噪声不符合高斯分布，则最小二乘会得到糟糕的结果。另外平方误差函数对离群值非常敏感，因此稳定性较低。</p>
+<h2 id="类别不平衡问题">类别不平衡问题<a hidden class="anchor" aria-hidden="true" href="#类别不平衡问题">#</a></h2>
+<p>某些时候我们使用的训练数据可能存在类别不平衡的问题，例如二分类问题中正样本占了 99%，这种情况会导致模型学习到“平凡解”，即模型将所有输入全部划分为正样本即可得到 99% 的准确率。很明显这样模型无法学习到负样本的分布情况，难以泛化到真实的分布中。</p>
+<p>此时通常可以采用认为平衡数据集的方式，手动使数据集中的各样本占比平衡，这有助于模型学习到少数样本的特征。但这毫无以为会带来另一个问题，即模型是在一个调整过的数据集上训练出来的，根据贝叶斯公式
+$$
+p(C_k|x)=\frac{p(x|C_k)p(C_k)}{p(x)}
+$$
+经过调整后的数据集其先验概率 $p(C_k)$ 已经发生了改变，因此从该数据集中得到的后验概率 $p(C_k|x)$ 不能直接用于分类，而是要经过如下变化
+$$
+p_{real}(C_k|x)=\frac{p_{real}(C_k)}{p_{balanced}(C_k)}p_{balanced}(C_k|x)
+$$
+这是因为当模型建立其类别条件概率 $p(x|C_k)$ 之后，后验概率就和先验概率成正比了。</p>
+<blockquote>
+<p>此处仍然存在一个问题，即我们假定模型从平衡数据中学习到的类别条件概率 $p(x|C_k)$ 是正确的，因此这个调整之后的后验概率才是正确的，但是为什么认为调整过的数据集训练出的 $p(x|C_k)$ 是正确的呢？</p>
+</blockquote>
 
 
   </div>
@@ -203,15 +255,15 @@ $$
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="http://localhost:1313/knowledge/2025/prior-and-posterior-probabilities/">
+  <a class="prev" href="http://localhost:1313/knowledge/2025/least-squares/">
     <span class="title">« Prev</span>
     <br>
-    <span>先验概率与后验概率</span>
+    <span>最小二乘</span>
   </a>
-  <a class="next" href="http://localhost:1313/knowledge/2024/how-to-write-a-paper/">
+  <a class="next" href="http://localhost:1313/knowledge/2025/decision-in-ai-and-calculus-of-variations/">
     <span class="title">Next »</span>
     <br>
-    <span>如何写一篇论文</span>
+    <span>AI中的决策论（变分法的使用）</span>
   </a>
 </nav>
 

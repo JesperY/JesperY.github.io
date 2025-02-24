@@ -6,8 +6,16 @@
     <description>Recent content in 💡技术性文章 on RubySIU&#39;s Blog</description>
     <generator>Hugo -- 0.134.2</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 22 Sep 2024 11:00:16 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 16 Jan 2025 19:13:23 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>如何优雅地从 EarthData 下载数据</title>
+      <link>http://localhost:1313/posts/2025/how-to-download-from-earthdata/</link>
+      <pubDate>Thu, 16 Jan 2025 19:13:23 +0800</pubDate>
+      <guid>http://localhost:1313/posts/2025/how-to-download-from-earthdata/</guid>
+      <description>&lt;p&gt;EarthData 是一个由 NASA 维护的数据门户网站，这里可以很方便地检索并下载地理或者气象数据，例如 MODIS 数据。&lt;/p&gt;
+&lt;p&gt;但是如果通过网页检索有一个弊端，就是 EarthData 会把检索到的所有文件的下载链接缓存到页面上，然后再生成下载元文件，当检索的数据量过大时，检索时间很长不说，大量的链接文本也会导致页面崩溃，因而前功尽弃。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>修改 ssh 端口解决连接 Github 超时问题</title>
       <link>http://localhost:1313/posts/2024/modify-ssh-port-for-github/</link>

@@ -1,5 +1,5 @@
 ---
-title: 'Prior and Posterior Probabilities'
+title: '先验概率与后验概率'
 date: 2025-01-15T20:36:06+08:00
 draft: False
 ShowToc: true
