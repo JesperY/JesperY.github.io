@@ -13,7 +13,7 @@ buildDrafts: false
 buildFuture: false
 buildExpired: false
 
-paginate: 15
+pagerSize: 15
 
 minify:
     disableXML: true
@@ -37,6 +37,11 @@ menu:
       name: ⏱时间轴
       url: archives/
       weight: 2
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
 
 params:
   defaultTheme: auto

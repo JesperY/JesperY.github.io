@@ -181,8 +181,7 @@
 <p>在 <a href="https://github.com/gohugoio/hugo/releases/latest">hugo 发布页</a> 下载最新的二进制文件，在合适的目录下解压，将目录添加的 <code>PATH</code> 中。</p>
 <h2 id="二构建网站并添加主题">二、构建网站并添加主题<a hidden class="anchor" aria-hidden="true" href="#二构建网站并添加主题">#</a></h2>
 <blockquote>
-<p>建议使用 git bash。</p>
-</blockquote>
+<p>建议使用 git bash。</p></blockquote>
 <h3 id="1-构建网站">1. 构建网站<a hidden class="anchor" aria-hidden="true" href="#1-构建网站">#</a></h3>
 <p>使用指令构建 hugo 网站。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new site your_blog_path
@@ -192,8 +191,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git submodule add --depth<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
 </span></span><span style="display:flex;"><span>git submodule update --init --recursive <span style="color:#75715e"># needed when you reclone your repo (submodules may not get cloned automatically)</span>
 </span></span></code></pre></div><blockquote>
-<p>除此之外也可以使用 <code>Git Clone</code>、<code>ZIP</code>、<code>Hugo module </code> 等方法安装。</p>
-</blockquote>
+<p>除此之外也可以使用 <code>Git Clone</code>、<code>ZIP</code>、<code>Hugo module </code> 等方法安装。</p></blockquote>
 <p>修改配置文件 <code>hugo.yaml</code> ，添加 <code>theme: [&quot;PaperMod&quot;]</code>。</p>
 <h2 id="三撰写第一篇文章">三、撰写第一篇文章<a hidden class="anchor" aria-hidden="true" href="#三撰写第一篇文章">#</a></h2>
 <h3 id="1-生成文章">1. 生成文章<a hidden class="anchor" aria-hidden="true" href="#1-生成文章">#</a></h3>
@@ -202,16 +200,14 @@
 <h3 id="2-本地预览">2. 本地预览<a hidden class="anchor" aria-hidden="true" href="#2-本地预览">#</a></h3>
 <p><code>hugo server -D</code> 启动本地服务器，访问 <code>localhost:1313</code> 即可预览，<code>-D</code> 参数表示构建草稿。</p>
 <blockquote>
-<p>文章 meta 信息中的 draft 字段表示文章是否为草稿，草稿文件默认不会被构建。</p>
-</blockquote>
+<p>文章 meta 信息中的 draft 字段表示文章是否为草稿，草稿文件默认不会被构建。</p></blockquote>
 <h2 id="四使用-action-部署到-github-pages">四、使用 Action 部署到 GitHub Pages<a hidden class="anchor" aria-hidden="true" href="#四使用-action-部署到-github-pages">#</a></h2>
 <p>为什么不直接提交 <code>public</code> 到 <code>**.github.io</code> ？因为我不想再用一个额外的库来同步整个 Hugo 站点。</p>
 <p>使用 <code>Action</code> 操作可以直接将所有站点文件上传到 <code>**.github.io</code>，然后通过 <code>Action</code> 自动构建 Pages。</p>
 <h3 id="1-添加-workflow">1. 添加 workflow<a hidden class="anchor" aria-hidden="true" href="#1-添加-workflow">#</a></h3>
 <p>建立新文件 <code>.github/workflows/hugo.yaml</code>，内容如下：</p>
 <blockquote>
-<p>下面的文件为自用文件，请修改 branches 和 HUGO_VERSION，如果使用 submodule 方式添加 themes，则 deploy.steps 下的 uses 和 with 字段请保留。</p>
-</blockquote>
+<p>下面的文件为自用文件，请修改 branches 和 HUGO_VERSION，如果使用 submodule 方式添加 themes，则 deploy.steps 下的 uses 和 with 字段请保留。</p></blockquote>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># Sample workflow for building and deploying a Hugo site to GitHub Pages</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Deploy Hugo site to Pages</span>
 </span></span><span style="display:flex;"><span><span style="color:#ae81ff">​</span>
@@ -277,7 +273,7 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      - name: Upload artifact
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        uses: actions/upload-pages-artifact@v3
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        with:
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          path: ./public</span> 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          path: ./public</span>
 </span></span><span style="display:flex;"><span><span style="color:#ae81ff">​</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Deployment job</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#f92672">deploy</span>:
@@ -296,7 +292,7 @@
 </span></span><span style="display:flex;"><span>        <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/deploy-pages@v4</span>
 </span></span></code></pre></div><h3 id="2-启用-action">2. 启用 Action<a hidden class="anchor" aria-hidden="true" href="#2-启用-action">#</a></h3>
 <p>在你的 <code>**.github.io</code> 库中的 <code>settings -&gt; pages</code> 页面，将 <code>Build and deployment</code> 的 <code>Source</code> 改为 <code>GitHub Actions</code>。</p>
-<p><img loading="lazy" src="/constructions/images/How-to-use-hugo-on-GitHub/1.png" alt="修改 Pages 为 Actions 生成"  />
+<p><img loading="lazy" src="1.png" alt="修改 Pages 为 Actions 生成"  />
 </p>
 <h3 id="3-提交修改">3. 提交修改<a hidden class="anchor" aria-hidden="true" href="#3-提交修改">#</a></h3>
 <p>将整个博客站点的文件提交到 <code>**.github.io</code>，会自动执行 <code>Action</code>，构建网站。在库的 <code>Action</code> 页面可以看到构建状态。</p>

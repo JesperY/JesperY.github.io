@@ -4,7 +4,7 @@
     <title>📖学到老，活到老 on RubySIU&#39;s Blog</title>
     <link>http://localhost:1313/knowledge/</link>
     <description>Recent content in 📖学到老，活到老 on RubySIU&#39;s Blog</description>
-    <generator>Hugo -- 0.134.2</generator>
+    <generator>Hugo -- 0.147.1</generator>
     <language>zh-cn</language>
     <lastBuildDate>Mon, 24 Feb 2025 16:34:43 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/knowledge/index.xml" rel="self" type="application/rss+xml" />
@@ -71,6 +71,16 @@ $$&lt;/p&gt;</description>
       <guid>http://localhost:1313/knowledge/2024/what-is-r-square/</guid>
       <description>&lt;p&gt;决定系数$R^2$是一个在数学或者说统计学常见的评价标准，尤其是对于回归问题，模型的好坏完全可以用只通过$R^2$来衡量。&lt;/p&gt;
 &lt;p&gt;但是在使用这个指标之前我们有必要了解其背后的原理，尤其是和另一个非常容易混淆的相关系数$R$的关系。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>如何写一篇论文</title>
+      <link>http://localhost:1313/knowledge/2024/how-to-write-a-paper/</link>
+      <pubDate>Tue, 15 Oct 2024 09:38:47 +0800</pubDate>
+      <guid>http://localhost:1313/knowledge/2024/how-to-write-a-paper/</guid>
+      <description>&lt;p&gt;准备开始着手写自己的第一篇论文，结果憋了半个月憋不出半坨。。。&lt;/p&gt;
+&lt;p&gt;于是决定先学习一下写论文的基本流程和技巧。&lt;/p&gt;
+&lt;h2 id=&#34;一论文的基本结构&#34;&gt;一、论文的基本结构&lt;/h2&gt;
+&lt;p&gt;基本的论文是三段式结构，分别是：引言、（目标-方法-结果）、讨论-结论。&lt;/p&gt;</description>
     </item>
     <item>
       <title>什么是似然</title>

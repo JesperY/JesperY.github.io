@@ -4,9 +4,9 @@
     <title>RubySIU&#39;s Blog</title>
     <link>http://localhost:1313/</link>
     <description>Recent content on RubySIU&#39;s Blog</description>
-    <generator>Hugo -- 0.134.2</generator>
+    <generator>Hugo -- 0.147.1</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 24 Feb 2025 16:34:43 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 04 May 2025 11:14:40 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Some Questions</title>
@@ -15,6 +15,14 @@
       <guid>http://localhost:1313/knowledge/some-questions/</guid>
       <description>&lt;h2 id=&#34;一些需要回答的问题&#34;&gt;一些需要回答的问题&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;http://localhost:1313/knowledge/2025/classification-problem-in-deeplearning/&#34;&gt;深度学习中的分类问题&lt;/a&gt;: 在类别不平衡数据集中，虽然可以通过调整先验概率来修正建模之后的后验概率，但是如何保证模型在平衡数据集中学习到的类别条件概率可以代表不平衡数据集中的类别条件概率呢？&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Config Img Path in Typora</title>
+      <link>http://localhost:1313/constructions/2025/config-img-path-in-typora/</link>
+      <pubDate>Sun, 04 May 2025 11:14:40 +0800</pubDate>
+      <guid>http://localhost:1313/constructions/2025/config-img-path-in-typora/</guid>
+      <description>&lt;h2 id=&#34;在-typora-中配置图片的相对路径&#34;&gt;在 Typora 中配置图片的相对路径&lt;/h2&gt;
+&lt;p&gt;在自建博客中插入图片通常使用&lt;strong&gt;图床&lt;/strong&gt;和&lt;strong&gt;本地相对路径&lt;/strong&gt;两种方式。图床毫无疑问是最简单且方便的，目前也有很多免费的图床服务可以使用，但是总有人会担心将自己的数据交给别人是比较危险的（比如我）。但是通过 Markdown 编辑器（例如 Typora）插入图片时就不得不考虑图片本地路径和博客构建路径之间的不兼容，好在 Typora 目前已经支持在 md 文件中使用 font-matter 自定义图片预览的相对路径，又不影响图片构建。&lt;/p&gt;</description>
     </item>
     <item>
       <title>最小二乘</title>
@@ -87,6 +95,16 @@ $$&lt;/p&gt;</description>
       <guid>http://localhost:1313/constructions/2024/make-latex-compatible/</guid>
       <description>&lt;p&gt;技术博客逃不了写公式，$LaTEX$必然是最好的选择，但是 hugo 对 LaTEX 的兼容并不好，因此采用 MathJax 渲染。&lt;/p&gt;
 &lt;p&gt;最简单的做法是将以下代码插入到 &lt;code&gt;layouts\partials\footer.html&lt;/code&gt;，也可以用自己喜欢的方式将 js 代码添加到页面 html 中。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>如何写一篇论文</title>
+      <link>http://localhost:1313/knowledge/2024/how-to-write-a-paper/</link>
+      <pubDate>Tue, 15 Oct 2024 09:38:47 +0800</pubDate>
+      <guid>http://localhost:1313/knowledge/2024/how-to-write-a-paper/</guid>
+      <description>&lt;p&gt;准备开始着手写自己的第一篇论文，结果憋了半个月憋不出半坨。。。&lt;/p&gt;
+&lt;p&gt;于是决定先学习一下写论文的基本流程和技巧。&lt;/p&gt;
+&lt;h2 id=&#34;一论文的基本结构&#34;&gt;一、论文的基本结构&lt;/h2&gt;
+&lt;p&gt;基本的论文是三段式结构，分别是：引言、（目标-方法-结果）、讨论-结论。&lt;/p&gt;</description>
     </item>
     <item>
       <title>什么是似然</title>

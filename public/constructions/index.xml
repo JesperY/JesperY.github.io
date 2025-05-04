@@ -4,10 +4,18 @@
     <title>🛠️总想搭建点什么 on RubySIU&#39;s Blog</title>
     <link>http://localhost:1313/constructions/</link>
     <description>Recent content in 🛠️总想搭建点什么 on RubySIU&#39;s Blog</description>
-    <generator>Hugo -- 0.134.2</generator>
+    <generator>Hugo -- 0.147.1</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 01 Nov 2024 20:57:03 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 04 May 2025 11:14:40 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/constructions/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Config Img Path in Typora</title>
+      <link>http://localhost:1313/constructions/2025/config-img-path-in-typora/</link>
+      <pubDate>Sun, 04 May 2025 11:14:40 +0800</pubDate>
+      <guid>http://localhost:1313/constructions/2025/config-img-path-in-typora/</guid>
+      <description>&lt;h2 id=&#34;在-typora-中配置图片的相对路径&#34;&gt;在 Typora 中配置图片的相对路径&lt;/h2&gt;
+&lt;p&gt;在自建博客中插入图片通常使用&lt;strong&gt;图床&lt;/strong&gt;和&lt;strong&gt;本地相对路径&lt;/strong&gt;两种方式。图床毫无疑问是最简单且方便的，目前也有很多免费的图床服务可以使用，但是总有人会担心将自己的数据交给别人是比较危险的（比如我）。但是通过 Markdown 编辑器（例如 Typora）插入图片时就不得不考虑图片本地路径和博客构建路径之间的不兼容，好在 Typora 目前已经支持在 md 文件中使用 font-matter 自定义图片预览的相对路径，又不影响图片构建。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>hugo 博客 latex 公式兼容</title>
       <link>http://localhost:1313/constructions/2024/make-latex-compatible/</link>
