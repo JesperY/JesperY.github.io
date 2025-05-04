@@ -1,7 +1,7 @@
 ---
 title: '先验概率与后验概率'
 date: 2025-01-15T20:36:06+08:00
-draft: False
+draft: false
 ShowToc: true
 TocOpen: true
 typora-root-url: ..\..\..\static\

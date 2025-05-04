@@ -1,7 +1,7 @@
 ---
 title: '如何写一篇论文'
 date: 2024-10-15T09:38:47+08:00
-draft: true
+draft: false
 ShowToc: true
 TocOpen: true
 ---
