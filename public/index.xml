@@ -4,9 +4,9 @@
     <title>RubySIU&#39;s Blog</title>
     <link>http://localhost:1313/</link>
     <description>Recent content on RubySIU&#39;s Blog</description>
-    <generator>Hugo -- 0.147.1</generator>
+    <generator>Hugo -- 0.134.2</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 04 May 2025 11:14:40 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 05 May 2025 16:23:13 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Some Questions</title>
@@ -17,12 +17,12 @@
 &lt;p&gt;&lt;a href=&#34;http://localhost:1313/knowledge/2025/classification-problem-in-deeplearning/&#34;&gt;深度学习中的分类问题&lt;/a&gt;: 在类别不平衡数据集中，虽然可以通过调整先验概率来修正建模之后的后验概率，但是如何保证模型在平衡数据集中学习到的类别条件概率可以代表不平衡数据集中的类别条件概率呢？&lt;/p&gt;</description>
     </item>
     <item>
-      <title>Config Img Path in Typora</title>
-      <link>http://localhost:1313/constructions/2025/config-img-path-in-typora/</link>
-      <pubDate>Sun, 04 May 2025 11:14:40 +0800</pubDate>
-      <guid>http://localhost:1313/constructions/2025/config-img-path-in-typora/</guid>
-      <description>&lt;h2 id=&#34;在-typora-中配置图片的相对路径&#34;&gt;在 Typora 中配置图片的相对路径&lt;/h2&gt;
-&lt;p&gt;在自建博客中插入图片通常使用&lt;strong&gt;图床&lt;/strong&gt;和&lt;strong&gt;本地相对路径&lt;/strong&gt;两种方式。图床毫无疑问是最简单且方便的，目前也有很多免费的图床服务可以使用，但是总有人会担心将自己的数据交给别人是比较危险的（比如我）。但是通过 Markdown 编辑器（例如 Typora）插入图片时就不得不考虑图片本地路径和博客构建路径之间的不兼容，好在 Typora 目前已经支持在 md 文件中使用 font-matter 自定义图片预览的相对路径，又不影响图片构建。&lt;/p&gt;</description>
+      <title>Cocos 学习：Cramped Room Of Death Demo</title>
+      <link>http://localhost:1313/posts/2025/design-pattern-in-cocos/</link>
+      <pubDate>Mon, 05 May 2025 16:23:13 +0800</pubDate>
+      <guid>http://localhost:1313/posts/2025/design-pattern-in-cocos/</guid>
+      <description>&lt;h2 id=&#34;cocos-学习之设计模式以-cramped-room-of-death-为例&#34;&gt;Cocos 学习之设计模式：以 Cramped Room Of Death 为例&lt;/h2&gt;
+&lt;p&gt;本文基于 &lt;a href=&#34;https://www.bilibili.com/video/BV1JL4y1M7Y4&#34;&gt;《Cocos 游戏开发》Steam游戏复刻教程 &lt;/a&gt; ，但是并不涉及 Cocos Creator 的使用细节和 TypeScript 的基础语法等内容，而是专注于项目实现过程中的思想和设计模式。&lt;/p&gt;</description>
     </item>
     <item>
       <title>最小二乘</title>

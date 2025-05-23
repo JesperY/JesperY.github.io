@@ -158,7 +158,7 @@ class EventManager{
 
 在 Cramped Room Of Death 中，一个状态机基类如下：
 
-![StateMachine](StateMachine.svg)
+![StateMachine](StateMachine.svg) 
 
 其中条件列表使用 `params` 表示、状态图使用 `stateMachine` ，具体的状态转移则由 run() 定义。当前状态由 `currentState` 保存。这些参数由 `init()` 方法在状态机初始化过程中完成。
 
@@ -168,10 +168,10 @@ class EventManager{
 
 > 如果 currentState 是一个 SubStateMachine，同样也会在 `setter::currentState()` 时调用其 `run()` 方法，此时子状态机的 `run()` 被调用，其作用实际上和 `StateMachine` 完全一致，根据 params 和传入的参数确定子状态，进行状态转移。需要注意的是，子状态机完全由状态机管理，因此其仅仅保存所需的子状态图，params 列表由状态机维护。
 
-![State-SubStateMachine](State-SubStateMachine.svg)`
+![State-SubStateMachine](State-SubStateMachine.svg)
 
 无论转移的目标状态是 `State` 还是 `SubStateMachine` ，最终调用的都是 `State` 的 `run()` 方法，该方法通过其保存的实体 fsm 引用，调用实体的 `Animation` 组件播放动画。
 
 加入实体后我们的整个类图如下所示：
 
-![fsm](fsm.svg)
+![fsm](fsm.svg) 

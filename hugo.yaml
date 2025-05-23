@@ -47,6 +47,7 @@ params:
   defaultTheme: auto
   disableThemeToggle: false
   ShowAllPagesInArchive: true
+  fancybox: true
 
   profileMode:
     enabled: true
