@@ -109,6 +109,11 @@
                     <span>⏱时间轴</span>
                 </a>
             </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
         </ul>
     </nav>
 </header>
@@ -118,6 +123,19 @@
     💡技术性文章
   </h1>
 </header>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">使用 shp 文件裁切（掩膜）栅格数据
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>在地学科研绘图中，我们经常会使用 shp 文件来确定某些边界，同时又使用栅格文件（tiff, nc）来保存数据。为什么要分为两种文件呢？因为 shp 文件作为矢量数据，可以非常精确的划分边界。而栅格数据存在分辨率的问题，过粗的分辨率无法精确表示边界，过细的分辨率则会让文件变得庞大。但是各种地学数据则适合用栅格数据表达，因为其本身就因为观测计数的问题存在各种不同的分辨率，其观测数据在底层逻辑上也适合组织为栅格数据。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-05-25 21:01:30 +0800 CST'>May 25, 2025</span>&nbsp;·&nbsp;3 min</footer>
+  <a class="entry-link" aria-label="post link to 使用 shp 文件裁切（掩膜）栅格数据" href="http://localhost:1313/posts/2025/use-shp-to-cut-raster/"></a>
+</article>
 
 <article class="post-entry"> 
   <header class="entry-header">

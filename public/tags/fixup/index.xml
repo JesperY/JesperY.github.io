@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Fixup on RubySIU&#39;s Blog</title>
+    <link>http://localhost:1313/tags/fixup/</link>
+    <description>Recent content in Fixup on RubySIU&#39;s Blog</description>
+    <generator>Hugo -- 0.134.2</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 22 Sep 2024 11:00:16 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/fixup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>修改 ssh 端口解决连接 Github 超时问题</title>
+      <link>http://localhost:1313/posts/2024/modify-ssh-port-for-github/</link>
+      <pubDate>Sun, 22 Sep 2024 11:00:16 +0800</pubDate>
+      <guid>http://localhost:1313/posts/2024/modify-ssh-port-for-github/</guid>
+      <description>&lt;p&gt;某一天突然不能使用 SSH 连接到 Github 了，无论是 clone 还是 push 都不行，报错如下：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-ba&#34; data-lang=&#34;ba&#34;&gt;ssh: connect to host github.com port 22: Connection timed out
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;也不知道是网络问题还是开启了 2FA，亦或者是防火墙的原因？但是一番排查都没有解决问题，随后在 StackFlow 上发现了如下配置方法。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

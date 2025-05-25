@@ -4,8 +4,11 @@ date: 2025-02-15T09:54:01+08:00
 draft: false
 ShowToc: true
 TocOpen: true
-typora-root-url: ..\..\..\static\
+tags:
+  - machine learning
 ---
+
+
 
  
 

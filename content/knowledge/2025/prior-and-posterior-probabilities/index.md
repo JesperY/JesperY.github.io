@@ -4,14 +4,9 @@ date: 2025-01-15T20:36:06+08:00
 draft: false
 ShowToc: true
 TocOpen: true
-typora-root-url: ..\..\..\static\
+tags:
+  - math
 ---
-
-
-
-
-
-
 
 
 

@@ -4,7 +4,8 @@ date: 2025-02-15T14:55:29+08:00
 draft: false
 ShowToc: true
 TocOpen: true
-typora-root-url: ..\..\..\static\
+tags:
+  - math
 ---
 
 ## 最小二乘

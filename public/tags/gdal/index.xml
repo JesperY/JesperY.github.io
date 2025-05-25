@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Gdal on RubySIU&#39;s Blog</title>
+    <link>http://localhost:1313/tags/gdal/</link>
+    <description>Recent content in Gdal on RubySIU&#39;s Blog</description>
+    <generator>Hugo -- 0.134.2</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 14 Sep 2024 20:50:10 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/gdal/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>将多个区域的 GeoTIFF 文件合并为全球 TIFF</title>
+      <link>http://localhost:1313/posts/2024/merge-regional-tif-to-global/</link>
+      <pubDate>Sat, 14 Sep 2024 20:50:10 +0800</pubDate>
+      <guid>http://localhost:1313/posts/2024/merge-regional-tif-to-global/</guid>
+      <description>&lt;h2 id=&#34;一使用-arcmap-合并&#34;&gt;一、使用 ArcMap 合并&lt;/h2&gt;
+&lt;p&gt;使用 ArcMap 的工具箱对多个 TIFF 文件进行合并。&lt;/p&gt;
+&lt;p&gt;在 &lt;code&gt;ArcToolBox -&amp;gt; 数据管理工具 -&amp;gt; 栅格 -&amp;gt; 栅格数据集 -&amp;gt; 镶嵌至新栅格&lt;/code&gt; 。&lt;/p&gt;
+&lt;p&gt;打开工具后，在 &lt;code&gt;输入栅格&lt;/code&gt; 栏选中需要合并的数据，在 &lt;code&gt;输出位置&lt;/code&gt; 选定输出路径。在&lt;code&gt;具有扩展名的栅格数据集名称&lt;/code&gt; 设置输出文件名，要带扩展名。波段数和源文件波段数相同，其余可选参数建议查询后按需填写。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

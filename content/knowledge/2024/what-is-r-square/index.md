@@ -4,7 +4,8 @@ date: 2024-11-06T15:48:37+08:00
 draft: false
 ShowToc: true
 TocOpen: true
-typora-root-url: ..\..\..\static
+tags:
+  - math
 ---
 
 决定系数$R^2$是一个在数学或者说统计学常见的评价标准，尤其是对于回归问题，模型的好坏完全可以用只通过$R^2$来衡量。

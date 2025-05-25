@@ -4,6 +4,10 @@ date: 2025-05-05T16:23:13+08:00
 draft: false
 ShowToc: true
 TocOpen: true
+tags:
+  - cocos
+  - game
+  - design pattern
 ---
 
 ## Cocos 学习之设计模式：以 Cramped Room Of Death 为例

@@ -4,7 +4,8 @@ date: 2024-09-22T11:00:16+08:00
 draft: false
 ShowToc: true
 TocOpen: true
-typora-root-url: ..\..\..\static
+tags:
+  - fixup
 ---
 
 

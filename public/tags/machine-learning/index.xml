@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Machine Learning on RubySIU&#39;s Blog</title>
+    <link>http://localhost:1313/tags/machine-learning/</link>
+    <description>Recent content in Machine Learning on RubySIU&#39;s Blog</description>
+    <generator>Hugo -- 0.134.2</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 15 Feb 2025 09:54:01 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>深度学习之分类问题</title>
+      <link>http://localhost:1313/knowledge/2025/classification-problem-in-deeplearning/</link>
+      <pubDate>Sat, 15 Feb 2025 09:54:01 +0800</pubDate>
+      <guid>http://localhost:1313/knowledge/2025/classification-problem-in-deeplearning/</guid>
+      <description>&lt;h2 id=&#34;一构建一个分类模型的三种方法&#34;&gt;一、构建一个分类模型的三种方法&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;判别函数：直接建模一个函数将输入映射到分类，例如支持向量机。&lt;/li&gt;
+&lt;li&gt;判别式概率模型：建模一个条件概率模型 $p(C_k|x)$ ，根据输出的概率选择其分类结果，通常概率最高的类别就是分类类别。&lt;/li&gt;
+&lt;li&gt;生成式概率模型：首先建模条件概率 $p(x|C_k)$，然后根据先验概率 $p(C_k)$ 通过贝叶斯公式 $p(C_k|x)=\frac{p(x|C_k)p(C_k)}{p(x)}$ 得出后验概率分布，使用后验概率分布进行分类。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;$x$ 表示输入向量，$C_k$ 表示 k 个分类类别。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>AI中的决策论（变分法的使用）</title>
+      <link>http://localhost:1313/knowledge/2025/decision-in-ai-and-calculus-of-variations/</link>
+      <pubDate>Thu, 13 Feb 2025 10:52:44 +0800</pubDate>
+      <guid>http://localhost:1313/knowledge/2025/decision-in-ai-and-calculus-of-variations/</guid>
+      <description>&lt;h2 id=&#34;线性回归前瞻&#34;&gt;线性回归前瞻&lt;/h2&gt;
+&lt;p&gt;在机器学习中，我们认为模型在做回归时实际上学到了一种分布。例如我们给定一些样本，他们来自函数 $y=sin(x)+\epsilon$，其中误差项遵循正态分布 $N(\mu,\sigma)$ ，当模型根据这些数据进行回归时，他会自然的计算出对于每个输入 $x$ 其对应的预测输出 $y=p(t|x)$。也就是说模型首先给出的并不是一个确定的值，而是围绕真实值在内的一个概率分布，然后才能确定哪个值最接近真实值。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

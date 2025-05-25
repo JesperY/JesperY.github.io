@@ -4,7 +4,9 @@ date: 2025-05-04T11:14:40+08:00
 draft: true
 ShowToc: true
 TocOpen: true
-typora-root-url: ..\..\..\static\
+tags:
+  - writing
+  - typora
 ---
 
 ## 在 Typora 中配置图片的相对路径

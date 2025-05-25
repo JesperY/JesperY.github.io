@@ -4,6 +4,8 @@ date: 2025-05-23T20:09:41+08:00
 draft: false
 ShowToc: true
 TocOpen: true
+tags:
+  - hugo
 ---
 
 

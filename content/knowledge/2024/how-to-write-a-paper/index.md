@@ -4,6 +4,8 @@ date: 2024-10-15T09:38:47+08:00
 draft: false
 ShowToc: true
 TocOpen: true
+tags:
+  - research skills
 ---
 
 准备开始着手写自己的第一篇论文，结果憋了半个月憋不出半坨。。。

@@ -4,7 +4,8 @@ date: 2024-11-01T20:57:03+08:00
 draft: false
 ShowToc: true
 TocOpen: true
-typora-root-url: ..\..\..\static\ 
+tags:
+  - hugo
 ---
 
 技术博客逃不了写公式，$LaTEX$必然是最好的选择，但是 hugo 对 LaTEX 的兼容并不好，因此采用 MathJax 渲染。

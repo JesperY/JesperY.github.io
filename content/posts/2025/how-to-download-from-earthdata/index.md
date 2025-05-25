@@ -4,7 +4,8 @@ date: 2025-01-16T19:13:23+08:00
 draft: False
 ShowToc: true
 TocOpen: true
-typora-root-url: ..\..\..\static\
+tags:
+  - research skills
 ---
 
 

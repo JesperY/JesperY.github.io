@@ -6,8 +6,16 @@
     <description>Recent content in 🛠️总想搭建点什么 on RubySIU&#39;s Blog</description>
     <generator>Hugo -- 0.134.2</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 01 Nov 2024 20:57:03 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 23 May 2025 20:09:41 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/constructions/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在 Hugo 中使用 Fancybox 实现图片点击放大</title>
+      <link>http://localhost:1313/constructions/2025/use-fancybox-in-hugo/</link>
+      <pubDate>Fri, 23 May 2025 20:09:41 +0800</pubDate>
+      <guid>http://localhost:1313/constructions/2025/use-fancybox-in-hugo/</guid>
+      <description>&lt;p&gt;由于原生 Hugo 的页面不支持点击图片放大，而有时候我在博客中会使用一些内容比较多的图片，这就导致图片上的内容很小看不清。&lt;/p&gt;
+&lt;p&gt;有一种方法可以通过修改 Mark Render Hooks 实现 fancybox 方法图片，具体实现方法来自 &lt;a href=&#34;https://www.nan0in27.cn/p/hugo%E5%9B%BE%E7%89%87%E7%82%B9%E5%87%BB%E6%94%BE%E5%A4%A7/&#34;&gt;nan0in&amp;rsquo;s blog&lt;/a&gt;，在此转载以备日后查阅。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>hugo 博客 latex 公式兼容</title>
       <link>http://localhost:1313/constructions/2024/make-latex-compatible/</link>
